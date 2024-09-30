@@ -1,0 +1,235 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #4a4a5e;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar nav ul {
+    list-style-type: none;
+    padding: 20px;
+    width: 100%;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 10px;
+    padding: 20px;
+}
+
+.sidebar nav ul li:hover{
+    background-color: rgb(255, 85, 0);
+    cursor: pointer;
+}
+
+.sidebar nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+}
+
+.sidebar-footer a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+.stock-graph {
+    width: 100%;
+    height: 200px;
+    background-color: #e0e0e0;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.category-buttons button {
+    padding: 10px;
+    background-color: #e0e0e0;
+    border: none;
+    cursor: pointer;
+}
+
+.category-buttons button.active {
+    background-color: rgba(255, 85, 0, 0.727);
+    color: #fff;
+    border: none;
+}
+
+.stock-input {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.stock-input input {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.stock-input button {
+    padding: 10px 20px;
+    background-color: #4a4a5e;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 20px;
+}
+
+.news-container {
+    display: flex;
+    gap: 20px;
+}
+
+.news-list {
+    flex: 2;
+}
+
+.news-item {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+.news-item:hover {
+    background-color: #f5f5f5;
+}
+
+.news-detail {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .news-container {
+        flex-direction: column;
+    }
+
+    .news-list, .news-detail {
+        width: 100%;
+    }
+}
+/* css for the toggle button*/
+.toggle-menu {
+    display: none;
+    padding: 10px;
+    background-color: #4a4a5e;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    .toggle-menu {
+        display: block;
+    }
+
+    .sidebar {
+        display: none;
+        width: 100%;
+    }
+
+    .sidebar.visible {
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .main-content {
+        padding: 10px;
+    }
+
+    .category-buttons {
+        flex-wrap: wrap;
+    }
+
+    .category-buttons button {
+        flex: 1 1 48%;
+        margin: 5px 0;
+    }
+
+    .stock-input {
+        flex-direction: column;
+    }
+
+    .stock-input input, 
+    .stock-input button {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .news-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .news-list, .news-detail {
+        width: 100%;
+    }
+
+    .news-item {
+        padding: 10px;
+    }
+
+    .sidebar-footer a {
+        margin-top: 5px;
+    }
+}

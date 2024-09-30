@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tesla News Dashboard</title>
+    <link rel="stylesheet" href="styles_updated.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="#news">News</a></li>
+                    <li><a href="#profile">Profile</a></li>
+                    <li><a href="#import">Import</a></li>
+                    <li><a href="#security">Security</a></li>
+                    <li><a href="#settings">Settings</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#help">Help</a>
+                <a href="#logout">Logout</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h1>NEWS</h1>
+            <h2 id="stock-name">TSLA</h2>
+            
+            <div class="stock-graph">Stock Graph Here</div>
+            
+            <div class="stock-input">
+                <input type="text" id="stock-input" placeholder="Enter stock symbol">
+                <button id="fetch-news">Fetch News</button>
+            </div>
+
+            <div class="category-buttons">
+                <button id="financial-performance-btn">Financial Performance</button>
+                <button id="competitive-positioning-btn">Competitive Positioning</button>
+                <button id="industry-trends-btn">Industry Trends</button>
+                <button id="regulatory-impact-btn">Regulatory Impact</button>
+            </div>
+            
+            
+            
+            <div id="error-message" class="error-message"></div>
+            
+            <div class="news-container">
+                <div id="news-list" class="section news-list"></div>
+                <div id="news-detail" class="section news-detail"></div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="mockApi.js"></script>
+    <script type="module" src="scripts_updated.js"></script>
+</body>
+</html>
