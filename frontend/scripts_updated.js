@@ -1,4 +1,4 @@
-//import { fetchNewsApi, fetchStockDataApi } from './mockApi.js';
+import { fetchNewsApi, fetchStockDataApi } from './mockApi.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const stockNameElement = document.getElementById('stock-name');
@@ -56,28 +56,59 @@ document.addEventListener('DOMContentLoaded', () => {
     //     }
     // }
     
+    // async function fetchNews(stockName, category) {
+    //     try {
+    //         errorMessage.textContent = '';
+    //         newsList.innerHTML = '<p>Loading...</p>';
+    //         newsDetail.innerHTML = '';
+    //         //const response = await fetch(`/api/news/${stockName}`);
+    //         const response = await fetch(`http://localhost:5001/api/news?symbol=TSLA`)
+    //         if (!response.ok) {
+    //             throw new Error('Failed to fetch news');
+    //         }
+    //         const data = await response.json();
+    //         // const data = await fetchNewsApi(stockName, category);
+    //         currentNews[category] = data;
+    //         renderNewsList(data);
+    //         if (data.length > 0) {
+    //             renderNewsDetail(data[0]);
+    //         }
+    //     } catch (error) {
+    //         errorMessage.textContent = `An error occurred: ${error.message}`;
+    //         newsList.innerHTML = '';
+    //     }
+    // }
+    
     async function fetchNews(stockName, category) {
         try {
             errorMessage.textContent = '';
             newsList.innerHTML = '<p>Loading...</p>';
             newsDetail.innerHTML = '';
-            const response = await fetch(`/api/stock/${stockName}/status`);
+            
+            const response = await fetch(`http://localhost:5001/api/news?symbol=${stockName}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch news');
             }
+            
             const data = await response.json();
-            // const data = await fetchNewsApi(stockName, category);
-            currentNews[category] = data;
-            renderNewsList(data);
-            if (data.length > 0) {
-                renderNewsDetail(data[0]);
+            console.log(data); // Check the response structure here
+
+            // Ensure we're only passing the news array to renderNewsList
+            if (data.news && Array.isArray(data.news)) {
+                currentNews[category] = data.news;  // Store the news in the correct category
+                renderNewsList(data.news);          // Pass the news array to renderNewsList
+                if (data.news.length > 0) {
+                    renderNewsDetail(data.news[0]);
+                }
+            } else {
+                throw new Error('News data is not an array or is missing');
             }
         } catch (error) {
             errorMessage.textContent = `An error occurred: ${error.message}`;
             newsList.innerHTML = '';
         }
     }
-    
+
 
     fetchNewsButton.addEventListener('click', () => {
         const stockName = stockInput.value.trim().toUpperCase();
@@ -87,26 +118,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // function renderNewsList(news) {
+    //     newsList.innerHTML = news.map((item, index) => `
+    //                 <div class="news-item" data-index="${index}">
+    //                     <h3>${item.title}</h3>
+    //                     <p>${item.summary}</p>
+    //                     <div>
+    //                         <span>${item.publisher}</span>
+    //                         <span> • </span>
+    //                         <time>${new Date(item.time_published).toLocaleString()}</time>
+    //                     </div>
+    //                 </div>
+    //             `).join('');
+    // }
+
     function renderNewsList(news) {
+        // Validate that 'news' is an array
+        if (!Array.isArray(news)) {
+            errorMessage.textContent = 'No valid news data available.';
+            return;
+        }
+    
         newsList.innerHTML = news.map((item, index) => `
-                    <div class="news-item" data-index="${index}">
-                        <h3>${item.Title}</h3>
-                        <p>${item.Summary}</p>
-                        <div>
-                            <span>${item.Publisher}</span>
-                            <span> • </span>
-                            <time>${new Date(item.Time_published).toLocaleString()}</time>
-                        </div>
-                    </div>
-                `).join('');
+            <div class="news-item" data-index="${index}">
+                <h3>${item.title}</h3>
+                <div>
+                    <span>${item.publisher}</span>
+                    <span> • </span>
+                    <time>${new Date(item.time_published).toLocaleString()}</time>
+                </div>
+                <a href="${item.url}" target="_blank" rel="noopener noreferrer">Read full article</a>
+            </div>
+        `).join('');
     }
 
     function renderNewsDetail(newsItem) {
         newsDetail.innerHTML = `
-            <h2>${newsItem.Title}</h2>
-            <p>${newsItem.Summary}</p>
-            <p>Published by: ${newsItem.Publisher}</p>
-            <p>Published on: ${new Date(newsItem.Time_published).toLocaleString()}</p>
+            <h2>${newsItem.title}</h2>
+            <p>${newsItem.summary}</p>
+            <p>Published by: ${newsItem.publisher}</p>
+            <p>Published on: ${new Date(newsItem.time_published).toLocaleString()}</p>
             <a href="${newsItem.Url}" target="_blank" rel="noopener noreferrer">Read full article</a>
         `;
     }
