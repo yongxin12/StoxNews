@@ -5,7 +5,7 @@ FROM nginx:alpine
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy the static frontend files (HTML, CSS, JS)
-COPY ./frontend /usr/share/nginx/html
+COPY . /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 3000

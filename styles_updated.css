@@ -20,9 +20,10 @@ body {
 }
 
 .sidebar nav ul {
+    width: 100%;
     list-style-type: none;
     padding: 20px;
-    width: 100%;
+
 }
 
 .sidebar nav ul li {
@@ -60,10 +61,37 @@ body {
     width: 100%;
     height: 200px;
     background-color: #e0e0e0;
-    margin-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.date-range-selector {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    text-align: center;
+    max-width: inherit;
+}
+
+.date-range-selector button {
+    font-size: 1ex;
+    margin: 5px;
+    padding: 0;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+.date-range-selector button:hover {
+    background-color: #ddd;
+}
+
+
+#fetch-news:hover {
+    background-color: rgb(255, 85, 0);
+    cursor: pointer;
 }
 
 .category-buttons {
@@ -77,6 +105,10 @@ body {
     background-color: #e0e0e0;
     border: none;
     cursor: pointer;
+}
+
+.category-buttons button:hover {
+    background-color: #b5b5b5;
 }
 
 .category-buttons button.active {
@@ -139,33 +171,57 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-@media (max-width: 768px) {
-    .app-container {
-        flex-direction: column;
-    }
 
-    .sidebar {
-        width: 100%;
-    }
-
-    .news-container {
-        flex-direction: column;
-    }
-
-    .news-list, .news-detail {
-        width: 100%;
-    }
+/* Styles for the Toggle Button */
+.toggle-menu {
+    width: 100%;
+    padding: 10px;
+    display: none;
+    background-color: #4a4a5e;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-align: center;
 }
+
 /* Enhancements for Mobile Responsiveness */
 @media (max-width: 768px) {
+
+    html, body {
+        width: 100%;
+        max-width: 100%;  /* Prevents any content from exceeding 100% of viewport width */
+        overflow-x: hidden;  /* Prevent horizontal scrolling */
+
+    }
+
     .app-container {
         flex-direction: column;
     }
 
     .sidebar {
         width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction:row;
+        
+    }
+
+    .sidebar nav ul {
+        display: flex;
+        justify-content: space-between;
+        flex-direction:row;
+        height: fit-content;
+        padding: 0;
+    }
+    .sidebar nav ul li {
+        
         padding: 10px;
     }
+    .sidebar-footer a {
+        margin-top: 5px;
+    }
+
+
 
     .main-content {
         padding: 10px;
@@ -176,18 +232,22 @@ body {
     }
 
     .category-buttons button {
-        flex: 1 1 48%;
-        margin: 5px 0;
+        flex: 1 1 40%;
+        margin: 5px;
+        
     }
 
     .stock-input {
-        flex-direction: column;
+        flex-direction: row;
     }
 
     .stock-input input, 
     .stock-input button {
-        width: 100%;
         margin-bottom: 5px;
+    }
+    .stock-input button:hover {
+        background-color: rgb(255, 85, 0);
+        cursor: pointer;
     }
 
     .news-container {
@@ -195,42 +255,34 @@ body {
         gap: 10px;
     }
 
-    .news-list, .news-detail {
+    .news-list {
         width: 100%;
     }
+
 
     .news-item {
         padding: 10px;
     }
 
-    .sidebar-footer a {
-        margin-top: 5px;
-    }
-}
-
-/* Styles for the Toggle Button */
-.toggle-menu {
-    display: none;
-    padding: 10px;
-    background-color: #4a4a5e;
-    color: white;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    text-align: left;
-}
-
-@media (max-width: 768px) {
-    .toggle-menu {
-        display: block;
-    }
-
     .sidebar {
         display: none;
-        width: 100%;
+    }
+
+    .toggle-menu {
+        display: block;
+        
     }
 
     .sidebar.visible {
+        padding: 0;
+        margin: 0;
         display: block;
+
     }
+
+
 }
+
+
+
+

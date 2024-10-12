@@ -19,8 +19,8 @@
                 </ul>
             </nav>
             <div class="sidebar-footer">
-                <a href="#help">Help</a>
-                <a href="#logout">Logout</a>
+                <!-- <a href="#help">Help</a>
+                <a href="#logout">Logout</a> -->
             </div>
         </aside>
 
@@ -29,6 +29,16 @@
             <h2 id="stock-name">TSLA</h2>
             
             <div class="stock-graph">Stock Graph Here</div>
+            <div class="date-range-selector">
+                <button data-range="7d">7 Days</button>
+                <button data-range="1m">1 Month</button>
+                <button data-range="3m">3 Months</button>
+                <button data-range="6m">6 Months</button>
+                <button data-range="1y">1 Year</button>
+                <button data-range="5y">5 Years</button>
+                <button data-range="10y">10 Years</button>
+                <button data-range="all">All</button>
+            </div>
             
             <div class="stock-input">
                 <input type="text" id="stock-input" placeholder="Enter stock symbol">
@@ -55,5 +65,9 @@
 
     <script type="module" src="mockApi.js"></script>
     <script type="module" src="scripts_updated.js"></script>
+    <!-- Include Chart.js in your HTML -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  <!-- Chart.js via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/luxon"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon"></script>
 </body>
 </html>
