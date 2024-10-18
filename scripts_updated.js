@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const stockNameElement = document.getElementById('stock-name');
     const stockInput = document.getElementById('stock-input');
     const fetchNewsButton = document.getElementById('fetch-news');
+
+    
     const newsList = document.getElementById('news-list');
     const newsDetail = document.getElementById('news-detail');
     const errorMessage = document.getElementById('error-message');

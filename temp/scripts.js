@@ -95,7 +95,7 @@
 // });
 
 
-import { fetchNewsApi, fetchStockDataApi } from './mockApi.js';
+//import { fetchNewsApi, fetchStockDataApi } from './mockApi.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const stockNameElement = document.getElementById('stock-name');

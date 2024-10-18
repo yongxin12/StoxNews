@@ -3,6 +3,11 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f0f0f0;
+    
+    height: 100vh; /* Take up the full height of the viewport */
+
+    display: flex;
+    flex-direction: column;
 }
 
 .app-container {
@@ -64,6 +69,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#stockGraphElement {
+    width: 100%;   /* Takes full width of its container */
+ /* Set a fixed height to improve appearance */
 }
 
 .date-range-selector {
@@ -146,9 +156,34 @@ body {
     gap: 20px;
 }
 
-.news-list {
+#news-list {
     flex: 2;
+    flex-grow: 1; /* Allows the news list to grow and shrink with the window size */
+    max-height: calc(8 * 4rem); /* 4 items, each 5rem tall */
+    overflow-y: scroll; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    padding: 10px; /* Optional: Adjust padding to make the content look good */
+    box-sizing: border-box;
+    mask-image: linear-gradient(180deg, #000 0%, #000 calc(100% - 3rem), #0000 100%);
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 calc(100% - 3rem), #0000 100%);
 }
+
+/* Optional: Customize scroll behavior */
+#news-list::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}::-webkit-scrollbar {
+    width: 8px;
+}
+
+#news-list::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
+
+#news-list::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
 
 .news-item {
     background-color: white;
