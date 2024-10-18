@@ -7,9 +7,9 @@ export class StockDataFetcher {
         this.newsData = {};
     }
 
-    async fetchStockData(stockName) {
+    async fetchStockData(stockSymbol) {
         try {
-            const response = await fetch(`${this.apiBaseUrl}/api/stock?symbol=${stockName}`);
+            const response = await fetch(`${this.apiBaseUrl}/api/stock?symbol=${stockSymbol}`);
             if (!response.ok) throw new Error('Failed to fetch stock data');
             const data = await response.json();
             this.stockData = data.stock_info;
@@ -20,7 +20,7 @@ export class StockDataFetcher {
         }
     }
 
-    async fetchNewsData(stockName) {
+    async fetchNewsData(stockSymbol) {
         const categories = {
             'financial-performance-btn': 'general',
             'competitive-positioning-btn': 'competitor',
@@ -30,7 +30,7 @@ export class StockDataFetcher {
         try {
 
             const categoryPromises = Object.entries(categories).map(async ([btn, type]) => {
-                const response = await fetch(`${this.apiBaseUrl}/api/news?type=${type}&symbol=${stockName}`);
+                const response = await fetch(`${this.apiBaseUrl}/api/news?type=${type}&symbol=${stockSymbol}`);
                 if (!response.ok) throw new Error(`Failed to fetch news for ${type}`);
 
                 const data = await response.json();
