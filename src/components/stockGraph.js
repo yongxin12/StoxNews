@@ -3,6 +3,7 @@
 
 import { formatXAxisLabels } from '../utils/dateHelper.js';
 
+
 export class StockGraph1 {
     constructor(element) {
         this.chartElement = element;
@@ -86,9 +87,9 @@ export class StockGraph {
     }
 
     // Method to initialize and generate the graph
-    generateGraph(stockData, range) {
+    generateGraph(stockData, range, newsDates = []) {
         const parsedData = this.parseStockData(stockData); // Parse the stock data
-
+        console.log(newsDates);
         // Data for the chart
         const data = {
             labels: parsedData.dates,  // The dates (X-axis)
@@ -101,6 +102,19 @@ export class StockGraph {
                 tension: 0.4     // Smoothing the line
             }]
         };
+        // Add vertical line annotations for news dates
+        const annotations = newsDates.map(date => ({
+            type: 'line',
+            scaleID: 'x',
+            value: date,
+            borderColor: 'red',
+            borderWidth: 2,
+            label: {
+                content: 'News',
+                enabled: true,
+                position: 'top'
+            }
+        }));
 
         const options = {
             responsive: true,
@@ -128,11 +142,20 @@ export class StockGraph {
                 },
                 tooltip: {
                     enabled: true
+                },
+                annotation: {
+                    annotations: annotations // Highlight news dates
                 }
             },
             scales: {
                 x: {
-                    type: 'category',
+                    type: 'time',
+                    time: {
+                        unit: 'day',  // Set the time unit to 'day'
+                        // displayFormats: {
+                            
+                        // }
+                    },
                     title: {
                         display: true,
                         text: 'Date',
@@ -174,7 +197,7 @@ export class StockGraph {
             onResize: function(chart, size) {
                 // Trigger the re-animation after resizing (e.g., full screen)
                 chart.update({
-                    duration: 2000,  // Re-apply animation duration
+                    duration: 1000,  // Re-apply animation duration
                     easing: 'easeInOutBounce'  // Re-apply easing function
                 });
             }
@@ -206,7 +229,7 @@ export class StockGraph {
             closingPrices.push(item.close); // Collect the closing price
         });
 
-
+        console.log(dates);
         return { dates, closingPrices };
     }
 }
