@@ -1,3 +1,5 @@
+
+
 // Function to open the navigation bar
 function openNav() {
     document.getElementById("navbar").style.width = "250px";
@@ -12,7 +14,9 @@ function closeNav() {
 const placeholderTexts = [
     "Search for stock trends...",
     "Looking for the latest news?...",
-    "Find stock updates here..."
+    "Find stock updates here...",
+    "Enter stock symbols..."
+
 ];
 let currentTextIndex = 0;
 let currentCharIndex = 0;

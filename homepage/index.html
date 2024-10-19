@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StoxNews</title>
     <link rel="stylesheet" href="styles.css">
+
+    <script src="scripts.js"></script>
+
+     <!-- Include Chart.js in your HTML -->
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  <!-- Chart.js via CDN -->
+     <script src="https://cdn.jsdelivr.net/npm/luxon"></script>
+     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon"></script>
+     <script src="https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.3.0/dist/chartjs-plugin-annotation.min.js"></script>
 </head>
 <body>
     <div class="navbar" id="navbar">
@@ -17,14 +26,46 @@
 
     <span class="open-btn" onclick="openNav()">&#9776;</span>
 
-    <div class="main-content">
+    <main class="main-content">
         <h1 class="title" id="title">StoxNews</h1>
-        <div class="search-box">
-            <input type="text" id="search" placeholder="Search for news...">
-            <button class="search-btn" id="search-btn">Search</button>
-        </div>
-    </div>
+        <h2>NEWS</h2>
+        <h3 id="stock-name">TSLA</h3>
 
-    <script src="scripts.js"></script>
+        <div class="stock-graph">
+            <canvas id="stockGraphElement" width="400" height="200"></canvas>
+        </div>
+        <div class="date-range-selector">
+            <button data-range="7d">7 Days</button>
+            <button data-range="1m">1 Month</button>
+            <button data-range="3m">3 Months</button>
+            <button data-range="6m">6 Months</button>
+        </div>
+
+        <div class="stock-input">
+            <input type="text" id="stock-input" placeholder="Enter stock symbol">
+            <button id="fetch-news">Fetch News</button>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="search" placeholder="" readonly>
+            <button id="search-btn">Fetch News</button>
+        </div>
+        <p class="prompt">Find the latest stock market news and trends</p>
+
+        <div class="category-buttons">
+            <button id="financial-performance-btn">Financial Performance</button>
+            <button id="competitive-positioning-btn">Competitive Positioning</button>
+            <button id="industry-trends-btn">Industry Trends</button>
+            <button id="regulatory-impact-btn">Regulatory Impact</button>
+        </div>
+
+        <div id="error-message" class="error-message"></div>
+        <div class="news-container">
+            <div id="news-list" class="section news-list"></div>
+            <div id="news-detail" class="section news-detail"></div>
+        </div>
+    </main>
+
+
 </body>
 </html>

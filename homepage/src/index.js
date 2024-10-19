@@ -2,11 +2,9 @@
 
 import { StockDataFetcher } from './components/stockDataFetcher.js';
 import { StockGraph } from './components/stockGraph.js';
-import { DynamicPlaceholder } from './components/animation.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
-
 
     // const stockGraphElement = document.querySelector('.stock-graph');
     const dateRangeSelector = document.querySelector('.date-range-selector');
@@ -14,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const stockSymbolElement = document.getElementById('stock-name');
     const stockInput = document.getElementById('stock-input');
-    const fetchNewsButton = document.getElementById('search-btn');
+    const fetchNewsButton = document.getElementById('fetch-news');
 
     const newsList = document.getElementById('news-list');
     const newsDetail = document.getElementById('news-detail');
@@ -24,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const stockGraph = new StockGraph(stockGraphElement);
     const stockDataFetcher = new StockDataFetcher('http://localhost:5001');
-    const dynamicPlaceholder = new DynamicPlaceholder('stock-input');
 
     let stockData = [];
     let newsData;
@@ -42,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentButtonId;
 
-    dynamicPlaceholder.init();
+
     fetchNewsButton.addEventListener('click', async () => {
         let stockSymbol = stockInput.value.trim().toUpperCase();
         if (!stockSymbol) stockSymbol = 'TSLA';
