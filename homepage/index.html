@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StoxNews</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="navbar" id="navbar">
+        <button class="close-btn" onclick="closeNav()">&times;</button>
+        <a href="#home">Home</a>
+        <a href="#news">News</a>
+        <a href="#markets">Markets</a>
+        <a href="#about">About</a>
+    </div>
+
+    <span class="open-btn" onclick="openNav()">&#9776;</span>
+
+    <div class="main-content">
+        <h1 class="title" id="title">StoxNews</h1>
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Search for news...">
+            <button class="search-btn" id="search-btn">Search</button>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+/* General body styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+h1 {
+    font-size: 4rem;
+    color: #333;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeInUp 2s forwards;
+}
+
+/* Animation for the title */
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation for search box */
+@keyframes fadeInUpSearch {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.search-box {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeInUpSearch 2s 0.5s forwards;
+}
+
+.search-box input {
+    padding: 10px;
+    font-size: 1.2rem;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    width: 300px;
+}
+
+.search-box .search-btn {
+    padding: 10px 20px;
+    margin-left: 10px;
+    font-size: 1.2rem;
+    border: none;
+    background-color: #333;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-box .search-btn:hover {
+    background-color: #555;
+}
+
+/* Prompt text under the search bar */
+.prompt {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #666;
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: fadeInUpPrompt 2s 1s forwards;
+}
+
+/* Animation for the prompt */
+@keyframes fadeInUpPrompt {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Navigation Bar */
+.navbar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    /* Add opacity for smooth appearance */
+    opacity: 0;
+}
+
+.navbar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 22px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.navbar a:hover {
+    color: #f1f1f1;
+}
+
+/* When loaded, trigger the slide-in animation */
+.navbar.active {
+    animation: slideIn 1s forwards;
+    opacity: 1; /* Reveal sidebar */
+}
+
+/* Animation for the sidebar sliding in */
+@keyframes slideIn {
+    from {
+        width: 0;
+    }
+    to {
+        width: 250px;
+    }
+}
+
+.open-btn {
+    font-size: 30px;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #111;
+}
+
+.close-btn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.main-content {
+    text-align: center;
+}
