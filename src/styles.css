@@ -1,5 +1,8 @@
 /* Import animations from another file */
 @import url('./css/serch_box.css');
+@import url('./css/visibility.css');
+@import url('./css/animations.css');
+@import url('./css/navbar.css');
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -12,51 +15,16 @@ body {
     flex-direction: column;
 }
 
+.title {
+    font-size: 4rem;
+    color: #333;
+    transform: translateY(-20px);
+    animation: fadeInUp 2s forwards;
+}
+
 .app-container {
     display: flex;
     min-height: 100vh;
-}
-
-.sidebar {
-    width: 200px;
-    background-color: #4a4a5e;
-    color: white;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-}
-
-.sidebar nav ul {
-    width: 100%;
-    list-style-type: none;
-    padding: 20px;
-
-}
-
-.sidebar nav ul li {
-    margin-bottom: 10px;
-    padding: 20px;
-}
-
-.sidebar nav ul li:hover{
-    background-color: rgb(255, 85, 0);
-    cursor: pointer;
-}
-
-.sidebar nav ul li a {
-    color: white;
-    text-decoration: none;
-}
-
-.sidebar-footer {
-    margin-top: auto;
-}
-
-.sidebar-footer a {
-    display: block;
-    color: white;
-    text-decoration: none;
-    margin-top: 10px;
 }
 
 .main-content {
@@ -196,7 +164,7 @@ body {
     width: 100%;
     padding: 10px;
     display: none;
-    background-color: #4a4a5e;
+    background-color: #111;
     color: white;
     border: none;
     cursor: pointer;

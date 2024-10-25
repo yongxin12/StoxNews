@@ -1,0 +1,17 @@
+/* Initially hide the elements except sidebar, h1, and stock-input */
+.main-content > *:not(.title):not(.stock-input):not(h1) {
+    display: none; /* Hide everything except title and stock-input */
+}
+
+/* Add classes for animating elements when they appear */
+.show-element {
+    display: block !important; /* Make them visible */
+ /* Initially transparent */
+    animation: fadeIn 1s forwards; /* Fade-in animation */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1; /* Fully visible */
+    }
+}

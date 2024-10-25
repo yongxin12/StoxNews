@@ -42,7 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentButtonId;
 
+    const mainContent = document.querySelector('.main-content');
+
+
+    // Get all the elements you want to reveal after clicking Fetch News
+    const elementsToShow = mainContent.querySelectorAll(':not(.title):not(.stock-input)');
+
     dynamicPlaceholder.init();
+
     fetchNewsButton.addEventListener('click', async () => {
         let stockSymbol = stockInput.value.trim().toUpperCase();
         if (!stockSymbol) stockSymbol = 'TSLA';
@@ -62,6 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             //stockGraph.render(stockData, 'all');  // Render all by default
             stockGraph.generateGraph(stockData, 'all');
+
+             // Show hidden elements with animation
+             elementsToShow.forEach(element => {
+                element.classList.add('show-element');
+            });
+
 
         } catch (error) {
             errorMessage.textContent = `An error occurred: ${error.message}`;
@@ -244,6 +257,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function isMobile() {
         return window.innerWidth <= 768;
     }
+
+
+
 
 });
 

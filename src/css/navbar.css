@@ -2,3 +2,45 @@
 @import url('animations.css');
 
 
+
+.sidebar {
+    width: 200px;
+    background-color: #111;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar nav ul {
+    width: 100%;
+    list-style-type: none;
+    padding: 20px;
+
+}
+
+.sidebar nav ul li {
+    margin-bottom: 10px;
+    padding: 20px;
+}
+
+.sidebar nav ul li:hover{
+    background-color: rgb(255, 85, 0);
+    cursor: pointer;
+}
+
+.sidebar nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+}
+
+.sidebar-footer a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    margin-top: 10px;
+}
