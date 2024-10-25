@@ -69,14 +69,14 @@ export class DynamicPlaceholder {
 }
 
 // Usage Example:
-window.onload = function() {
-    const placeholderTexts = [
-        "Search for stock trends...",
-        "Looking for the latest news?...",
-        "Find stock updates here...",
-        "Enter stock symbols..."
-    ];
+// window.onload = function() {
+//     const placeholderTexts = [
+//         "Search for stock trends...",
+//         "Looking for the latest news?...",
+//         "Find stock updates here...",
+//         "Enter stock symbols..."
+//     ];
 
-    const dynamicPlaceholder = new DynamicPlaceholder("search", placeholderTexts);
-    dynamicPlaceholder.init();
-};
+//     const dynamicPlaceholder = new DynamicPlaceholder("search", placeholderTexts);
+//     dynamicPlaceholder.init();
+// };

@@ -18,8 +18,17 @@ body {
 .title {
     font-size: 4rem;
     color: #333;
-    transform: translateY(-20px);
+    opacity: 0;
+    transform: translateY(-20px); 
     animation: fadeInUp 2s forwards;
+    transition: all 0.5s ease;
+}
+
+.centered-title {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
 }
 
 .app-container {
@@ -28,8 +37,11 @@ body {
 }
 
 .main-content {
-    flex: 1;
+    /* flex: 1; */
     padding: 20px;
+    width: 90%;
+    margin: 0 auto;
+
 }
 
 .stock-graph {

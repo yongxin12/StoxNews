@@ -6,7 +6,7 @@ import { DynamicPlaceholder } from './components/animation.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
-
+    const title = document.getElementById('title');
 
     // const stockGraphElement = document.querySelector('.stock-graph');
     const dateRangeSelector = document.querySelector('.date-range-selector');
@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
              elementsToShow.forEach(element => {
                 element.classList.add('show-element');
             });
+            title.classList.toggle('centered-title');
 
 
         } catch (error) {

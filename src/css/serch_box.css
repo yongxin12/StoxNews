@@ -2,11 +2,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* opacity: 0; */
-    transform: translateY(-20px);
+    opacity: 0;
+    transform: translate(50px, 50px);
     margin-top: 20px;
     margin-bottom: 20px;
     animation: fadeInUpSearch 2s 0.5s forwards;
+    width: 70%;
+    margin: 0 auto;
 }
 
 .stock-input input {
