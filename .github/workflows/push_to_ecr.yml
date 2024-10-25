@@ -10,10 +10,10 @@ jobs:
     env:  # Defining environment variables
       AWS_REGION: us-east-1
       AWS_ACCOUNT_ID: 311141556352
-      ECR_REPOSITORY: stock/backend
+      ECR_REPOSITORY: stock/frontend
       IMAGE_TAG: latest                         
-      AWS_ACCESS_KEY_ID: AKIAUQ4L3MCAH4KCVIZZ
-      AWS_SECRET_ACCESS_KEY: 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
+      AWS_ACCESS_KEY_ID: AKIAUQ4L3MCALK54CZPN
+      AWS_SECRET_ACCESS_KEY: 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
 
     steps:
     - uses: actions/checkout@v2
