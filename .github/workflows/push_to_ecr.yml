@@ -10,7 +10,7 @@ jobs:
     env:  # Defining environment variables
       AWS_REGION: us-east-1
       AWS_ACCOUNT_ID: 311141556352
-      ECR_REPOSITORY: stock/frontend
+      ECR_REPOSITORY: stock/fornted
       IMAGE_TAG: latest                         
       AWS_ACCESS_KEY_ID: AKIAUQ4L3MCALK54CZPN
       AWS_SECRET_ACCESS_KEY: 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
