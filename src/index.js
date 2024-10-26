@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'all': Infinity
     };
 
+
     let currentButtonId;
     let currentSymbol;
     let currentNewsList;
@@ -58,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let stockSymbol = stockInput.value.trim().toUpperCase();
         if (!stockSymbol) stockSymbol = 'TSLA';
         if (!stockSymbol) return;
-
+        currentSymbol = stockSymbol;
         try {
 
             errorMessage.textContent = '';
@@ -74,13 +75,22 @@ document.addEventListener('DOMContentLoaded', () => {
             //stockGraph.render(stockData, 'all');  // Render all by default
             stockGraph.generateGraph(stockData, 'all');
 
-             // Show hidden elements with animation
-             elementsToShow.forEach(element => {
+            // Show hidden elements with animation
+            elementsToShow.forEach(element => {
                 element.classList.add('show-element');
             });
-            if (title.classList.contains('centered-title')) {
-                title.classList.remove('centered-title'); 
-            } 
+            if (!isMobile()) {
+                if (title.classList.contains('centered-title')) {
+                    title.classList.remove('centered-title');
+                }
+            } else {
+                if (title.classList.contains('centered-title')) {
+                    title.classList.remove('centered-title');
+                    title.classList.remove('title');
+                }
+            }
+
+
 
 
         } catch (error) {
@@ -93,12 +103,12 @@ document.addEventListener('DOMContentLoaded', () => {
     dateRangeSlider.addEventListener('input', async (event) => {
         const rangeIndex = parseInt(event.target.value) - 1;  // Get the slider value (1-4) and adjust for 0-based index
         const range = dateRanges[rangeIndex];  // Map slider value to the date range
-    
+
         const filteredStockData = filterStockDataByRange(stockData, range);
         const filteredNewsData = filterNewsDataByRange(newsData, range);
-        
+
         console.log(filteredNewsData);
-    
+
         const newsDates = filteredNewsData.map(newsItem => newsItem.date);  // Extract news dates
         stockGraph.generateGraph(filteredStockData, range, newsDates);  // Pass news dates to graph
         renderNewsList(filteredNewsData);
@@ -150,11 +160,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (currentButtonId === 'competitive-positioning-btn') {
                 const competitiveNewsData = Object.entries(newsData[currentButtonId]).forEach(([symbol, news]) => {
-                    currentSymbol = symbol;
+                    //currentSymbol = symbol;
                     currentNewsList = news;
                     renderNewsList(currentNewsList);
                 })
-            } else if (currentButtonId === 'industry-trends-btn'){
+            } else if (currentButtonId === 'industry-trends-btn') {
                 currentNewsList = newsData[currentButtonId];
                 renderNewsList(currentNewsList);
 
@@ -162,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentNewsList = newsData[currentButtonId];
                 renderNewsList(newsData[currentButtonId]);
             }
-            
+
 
         }
     });
@@ -179,7 +189,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Clear the current news list (destroy existing news)
             newsList.innerHTML = '';
 
-            newsList.innerHTML = news.map((item, index) => `
+            newsList.innerHTML = news.map((item, index) => {
+                const logoURL = getLogoURL(currentSymbol);
+                return `
             <div class="news-item" data-index="${index}">
                 <h3>${truncateText(item.title, 160)}</h3>
                 <div>
@@ -188,9 +200,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <time>${new Date(item.time_published).toLocaleString()}</time>
                 </div>
                 <a href="${item.url}" target="_blank" rel="noopener noreferrer">Read full article</a>
+                ${logoURL ? `<img src="${logoURL}" alt="${currentSymbol} logo" class="logo-image">` : ''}
             </div>
-        `).join('');
-        };
+            `;
+            }).join('');
+        }
 
     }
 
@@ -198,9 +212,22 @@ document.addEventListener('DOMContentLoaded', () => {
         return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
     }
 
+    // Helper function to get the logo URL based on currentSymbol
+    function getLogoURL(symbol) {
+        // Assuming logos are stored in 'assets/logos/' with the symbol name as the filename
+        const logoPath = `./src/assets/${symbol}.png`;
+
+        // Create an image element to check if the image exists
+        const img = new Image();
+        img.src = logoPath;
+
+        // Return the logo path if the image exists, otherwise null
+        return img.complete || img.height !== 0 ? logoPath : null;
+    }
 
 
     function renderNewsDetail(newsItem) {
+        const logoURL = getLogoURL(currentSymbol);
         if (!isMobile()) {
             newsDetail.innerHTML = `
             <h2>${newsItem.title}</h2>
@@ -208,6 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>Published by: ${newsItem.publisher}</p>
             <p>Published on: ${new Date(newsItem.time_published).toLocaleString()}</p>
             <a href="${newsItem.url}" target="_blank" rel="noopener noreferrer">Read full article</a>
+            ${logoURL ? `<img src="${logoURL}" alt="${currentSymbol} logo" class="logo-image">` : ''}
         `;
         } else {
             return `

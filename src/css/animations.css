@@ -13,7 +13,16 @@
         width: 0;
     }
     to {
-        width: 250px;
+        width: 200px;
+    }
+}
+
+@keyframes slideInTop  {
+    from {
+        height: 0;
+    }
+    to {
+        height: 100%;
     }
 }
 

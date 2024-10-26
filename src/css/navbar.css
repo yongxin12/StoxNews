@@ -4,13 +4,17 @@
 
 
 .sidebar {
-    width: 200px;
+    opacity: 1;
+    max-width: 200px;
     background-color: #111;
     color: white;
     padding: 20px;
     display: flex;
     flex-direction: column;
+    animation: slideIn 1s forwards;
 }
+
+
 
 .sidebar nav ul {
     width: 100%;
@@ -22,6 +26,7 @@
 .sidebar nav ul li {
     margin-bottom: 10px;
     padding: 20px;
+    
 }
 
 .sidebar nav ul li:hover{
