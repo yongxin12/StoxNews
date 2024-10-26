@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const stockGraph = new StockGraph(stockGraphElement);
-    const stockDataFetcher = new StockDataFetcher('18.206.45.106:5001');
+    const stockDataFetcher = new StockDataFetcher('http://18.206.45.106:5001');
     const dynamicPlaceholder = new DynamicPlaceholder('stock-input');
 
     let stockData = [];
