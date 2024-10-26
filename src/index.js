@@ -125,15 +125,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const startDate = new Date(now.setDate(now.getDate() - rangeDays));
 
         // Ensure the currentButtonId category exists in newsData
-        if (!newsData[currentButtonId] || !Array.isArray(newsData[currentButtonId])) {
+        if (!currentNewsList || !Array.isArray(currentNewsList)) {
             console.warn(`No news found for category: ${currentButtonId}`);
             return [];
-        } else if (currentButtonId === 'competitive-positioning-btn') {
-            console.log('competitive-positioning-btn');
         }
 
         // Filter the news for the current category by date range
-        return newsData[currentButtonId].filter(newsItem => {
+        return currentNewsList.filter(newsItem => {
 
             const newsDate = new Date(newsItem.date);
             console.log(newsItem.date);
@@ -159,6 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (currentButtonId === 'industry-trends-btn'){
                 currentNewsList = newsData[currentButtonId];
                 renderNewsList(currentNewsList);
+
             } else {
                 currentNewsList = newsData[currentButtonId];
                 renderNewsList(newsData[currentButtonId]);
