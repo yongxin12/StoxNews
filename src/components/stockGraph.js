@@ -25,7 +25,7 @@ export class StockGraph1 {
         const options = {
             responsive: true,
             maintainAspectRatio: false,
-            fill: true,
+            fill: false,
             scales: {
                 x: {
                     type: 'category',
@@ -96,7 +96,7 @@ export class StockGraph {
             datasets: [{
                 label: `Closing Prices`, // Stock symbol
                 data: parsedData.closingPrices, // Closing prices (Y-axis)
-                borderColor: 'rgba(75, 192, 192, 1)',  // Custom line color
+                borderColor: 'rgb(52, 168, 83)',  // Custom line color
                 borderWidth: 2,  // Slightly thicker line
                 pointRadius: 1,  // Larger points for better visibility
                 tension: 0.4     // Smoothing the line
@@ -112,14 +112,16 @@ export class StockGraph {
             label: {
                 content: 'News',
                 enabled: true,
-                position: 'top'
-            }
+                position: 'start',
+                yAdjust: -30,
+            },
+            drawTime: 'afterDatasetsDraw',
         }));
 
         const options = {
             responsive: true,
             maintainAspectRatio: false,
-            fill: true,
+            fill: false,
             animation: {
                 duration: 1000,  // Animation duration in milliseconds
                 easing: 'easeInOutBounce'  // Easing type for animation
@@ -128,7 +130,8 @@ export class StockGraph {
                 padding: {
                     left: 10,
                     right: 10
-                }
+                },
+                backgroundColor: 'transparent'  // Makes chart area transparent
             },
             plugins: {
                 legend: {
@@ -170,6 +173,9 @@ export class StockGraph {
                             size: 12
                         },
     
+                    },
+                    grid: {
+                        display: false // Disable vertical grid lines
                     }
                 },
                 y: {
@@ -190,7 +196,7 @@ export class StockGraph {
                     },
                     grid: {
                         color: 'rgba(200, 200, 200, 0.2)',  // Light gridlines
-                        borderDash: [5, 5]
+                        borderDash: [6, 6]
                     }
                 }
             },

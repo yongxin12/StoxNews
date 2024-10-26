@@ -45,35 +45,126 @@ export class StockDataFetcher {
 
                 const data = await response.json();
                 console.log(`Response for ${type}:`, data); // Log the full response
-                if (data.news && Array.isArray(data.news)) {
+                if (data) {
                     // Populate the newsData with the response for the current category
-                    data.news.forEach(element => {
-                        if (element.time_published) {
-                            try {
-                                // Mock dates
-                                const randomDate = this.getRandomDateInLastTwoMonths();
-                                element.time_published = randomDate;
+                    if (btn === 'financial-performance-btn') {
+                        data.news.forEach(element => {
+                            if (element.time_published) {
+                                try {
+                                    // Mock dates
+                                    const randomDate = this.getRandomDateInLastTwoMonths();
+                                    element.time_published = randomDate;
 
-                                // element.time_published = new Date(
-                                //     element.time_published.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})/, '$1-$2-$3T$4:$5:$6')
-                                // );
-                                //element.date = element.time_published.toLocaleString().slice(2, 10);
-                                //element.time_published = element.time_published.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})/, '$1-$2-$3');
-                                element.date = element.time_published.getFullYear() + '-' +
-                                String(element.time_published.getMonth() + 1).padStart(2, '0') + '-' + 
-                                String(element.time_published.getDate()).padStart(2, '0');
-                            } catch (formatError) {
-                                console.warn(`Error formatting timePublished for ${type}:`, formatError);
+                                    // element.time_published = new Date(
+                                    //     element.time_published.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})/, '$1-$2-$3T$4:$5:$6')
+                                    // );
+                                    //element.date = element.time_published.toLocaleString().slice(2, 10);
+                                    //element.time_published = element.time_published.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})/, '$1-$2-$3');
+                                    element.date = element.time_published.getFullYear() + '-' +
+                                        String(element.time_published.getMonth() + 1).padStart(2, '0') + '-' +
+                                        String(element.time_published.getDate()).padStart(2, '0');
+                                } catch (formatError) {
+                                    console.warn(`Error formatting timePublished for ${type}:`, formatError);
+                                }
+                            } else {
+                                console.warn(`Missing timePublished for news item in ${type}`);
                             }
-                        } else {
-                            console.warn(`Missing timePublished for news item in ${type}`);
-                        }
-                    });
-                    // MOCK dates Sort the news by time_published in descending order (latest first)
-                    data.news.sort((a, b) => b.time_published - a.time_published);
+                        });
+                        // MOCK dates Sort the news by time_published in descending order (latest first)
+                        data.news.sort((a, b) => b.time_published - a.time_published);
 
-                    console.log(data.news);
-                    this.newsData[btn] = data.news;
+                        console.log(data.news);
+                        this.newsData[btn] = data.news;
+
+                    } else if (btn === 'regulatory-impact-btn') {
+                        data.news.forEach(element => {
+                            if (element.time_published) {
+                                try {
+                                    // Mock dates
+                                    const randomDate = this.getRandomDateInLastTwoMonths();
+                                    element.time_published = randomDate;
+                                    element.date = element.time_published.getFullYear() + '-' +
+                                        String(element.time_published.getMonth() + 1).padStart(2, '0') + '-' +
+                                        String(element.time_published.getDate()).padStart(2, '0');
+                                } catch (formatError) {
+                                    console.warn(`Error formatting timePublished for ${type}:`, formatError);
+                                }
+                            } else {
+                                console.warn(`Missing timePublished for news item in ${type}`);
+                            }
+                        });
+                        // MOCK dates Sort the news by time_published in descending order (latest first)
+                        data.news.sort((a, b) => b.time_published - a.time_published);
+
+                        console.log(data.news);
+                        this.newsData[btn] = data.news;
+
+                    } else if (btn === 'competitive-positioning-btn') {
+
+                        if (!this.newsData[btn]) {
+                            this.newsData[btn] = {};
+                        }
+
+                        data.forEach(set => {
+                            if (set.news && set.symbol) {
+
+                                if (!this.newsData[btn][set.symbol]) {
+                                    this.newsData[btn][set.symbol] = [];
+                                }
+
+                                set.news.forEach(element => {
+                                    if (element.time_published) {
+                                        try {
+                                            // Mock dates
+                                            const randomDate = this.getRandomDateInLastTwoMonths();
+                                            element.time_published = randomDate;
+
+                                            element.date = element.time_published.getFullYear() + '-' +
+                                                String(element.time_published.getMonth() + 1).padStart(2, '0') + '-' +
+                                                String(element.time_published.getDate()).padStart(2, '0');
+                                        } catch (formatError) {
+                                            console.warn(`Error formatting timePublished for ${type}:`, formatError);
+                                        }
+                                    } else {
+                                        console.warn(`Missing timePublished for news item in ${type}`);
+                                    }
+                                });
+                            } else {
+                                console.warn(`Set news or symbol is empty in ${type}`);
+                            }
+                            // MOCK dates Sort the news by time_published in descending order (latest first)
+                            set.news.sort((a, b) => b.time_published - a.time_published);
+                            this.newsData[btn][set.symbol] = set.news;
+                            console.log(this.newsData[btn]);
+                        });
+
+
+
+                    } else if (btn === 'industry-trends-btn') {
+                        data.forEach(element => {
+                            if (element.time_published) {
+                                try {
+                                    // Mock dates
+                                    const randomDate = this.getRandomDateInLastTwoMonths();
+                                    element.time_published = randomDate;
+                                    element.date = element.time_published.getFullYear() + '-' +
+                                        String(element.time_published.getMonth() + 1).padStart(2, '0') + '-' +
+                                        String(element.time_published.getDate()).padStart(2, '0');
+                                } catch (formatError) {
+                                    console.warn(`Error formatting timePublished for ${type}:`, formatError);
+                                }
+                            } else {
+                                console.warn(`Missing timePublished for news item in ${type}`);
+                            }
+                        });
+                        // MOCK dates Sort the news by time_published in descending order (latest first)
+                        data.sort((a, b) => b.time_published - a.time_published);
+
+                        console.log(data);
+                        this.newsData[btn] = data;
+
+                    }
+
                 } else {
                     console.warn(`No news or invalid data for category: ${type}`);
                 }

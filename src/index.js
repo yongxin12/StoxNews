@@ -9,7 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const title = document.getElementById('title');
 
     // const stockGraphElement = document.querySelector('.stock-graph');
-    const dateRangeSelector = document.querySelector('.date-range-selector');
+    //const dateRangeSelector = document.querySelector('.date-range-selector');
+    const dateRangeSlider = document.querySelector('#dateRangeSlider');
+    const dateRanges = ['7d', '1m', '3m', '6m'];
     const stockGraphElement = document.getElementById('stockGraphElement');
 
     const stockSymbolElement = document.getElementById('stock-name');
@@ -41,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     let currentButtonId;
+    let currentSymbol;
+    let currentNewsList;
 
     const mainContent = document.querySelector('.main-content');
 
@@ -74,7 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
              elementsToShow.forEach(element => {
                 element.classList.add('show-element');
             });
-            title.classList.toggle('centered-title');
+            if (title.classList.contains('centered-title')) {
+                title.classList.remove('centered-title'); 
+            } 
 
 
         } catch (error) {
@@ -83,21 +89,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Handle date range filtering
-    dateRangeSelector.addEventListener('click', async (event) => {
-        if (event.target.tagName === 'BUTTON') {
-            const range = event.target.getAttribute('data-range');
-            const filteredStockData = filterStockDataByRange(stockData, range);
-            const filteredNewsData = filterNewsDataByRange(newsData, range);
-            console.log(filteredNewsData);
-            // stockGraph.generateGraph(filteredStockData, range);
 
-            const newsDates = filteredNewsData.map(newsItem => newsItem.date); // Extract news dates
-            stockGraph.generateGraph(filteredStockData, range, newsDates); // Pass news dates to graph
-            renderNewsList(filteredNewsData);
-
-        }
+    dateRangeSlider.addEventListener('input', async (event) => {
+        const rangeIndex = parseInt(event.target.value) - 1;  // Get the slider value (1-4) and adjust for 0-based index
+        const range = dateRanges[rangeIndex];  // Map slider value to the date range
+    
+        const filteredStockData = filterStockDataByRange(stockData, range);
+        const filteredNewsData = filterNewsDataByRange(newsData, range);
+        
+        console.log(filteredNewsData);
+    
+        const newsDates = filteredNewsData.map(newsItem => newsItem.date);  // Extract news dates
+        stockGraph.generateGraph(filteredStockData, range, newsDates);  // Pass news dates to graph
+        renderNewsList(filteredNewsData);
     });
+
 
     function filterStockDataByRange(stockData, range) {
         const now = new Date();
@@ -122,6 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!newsData[currentButtonId] || !Array.isArray(newsData[currentButtonId])) {
             console.warn(`No news found for category: ${currentButtonId}`);
             return [];
+        } else if (currentButtonId === 'competitive-positioning-btn') {
+            console.log('competitive-positioning-btn');
         }
 
         // Filter the news for the current category by date range
@@ -142,14 +150,28 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             event.target.classList.add('active');
 
-            renderNewsList(newsData[currentButtonId]);
+            if (currentButtonId === 'competitive-positioning-btn') {
+                const competitiveNewsData = Object.entries(newsData[currentButtonId]).forEach(([symbol, news]) => {
+                    currentSymbol = symbol;
+                    currentNewsList = news;
+                    renderNewsList(currentNewsList);
+                })
+            } else if (currentButtonId === 'industry-trends-btn'){
+                currentNewsList = newsData[currentButtonId];
+                renderNewsList(currentNewsList);
+            } else {
+                currentNewsList = newsData[currentButtonId];
+                renderNewsList(newsData[currentButtonId]);
+            }
+            
 
         }
     });
 
     function renderNewsList(news) {
         // Validate that 'news' is an array
-        if (!Array.isArray(news)) {
+
+        if (!news) {
             errorMessage.textContent = 'No valid news data available.';
             newsList.innerHTML = '';
             return;
@@ -160,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             newsList.innerHTML = news.map((item, index) => `
             <div class="news-item" data-index="${index}">
-                <h3>${item.title}</h3>
+                <h3>${truncateText(item.title, 160)}</h3>
                 <div>
                     <span>${item.publisher}</span>
                     <span> • </span>
@@ -173,6 +195,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    function truncateText(text, maxLength) {
+        return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+    }
+
 
 
     function renderNewsDetail(newsItem) {
@@ -182,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>${newsItem.summary}</p>
             <p>Published by: ${newsItem.publisher}</p>
             <p>Published on: ${new Date(newsItem.time_published).toLocaleString()}</p>
-            <a href="${newsItem.Url}" target="_blank" rel="noopener noreferrer">Read full article</a>
+            <a href="${newsItem.url}" target="_blank" rel="noopener noreferrer">Read full article</a>
         `;
         } else {
             return `
@@ -206,8 +232,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const activeCategoryButton = document.querySelector('.category-buttons button.active');
                 const category = activeCategoryButton ? activeCategoryButton.id : null;
 
-                if (category && newsData[category][index]) {
-                    const selectedNewsItem = newsData[category][index];
+                if (category && currentNewsList[index]) {
+                    const selectedNewsItem = currentNewsList[index];
                     // console.log(selectedNewsItem);
                     renderNewsDetail(selectedNewsItem); // Render the details of the clicked news item
                 }
@@ -218,8 +244,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const activeCategoryButton = document.querySelector('.category-buttons button.active');
                 const category = activeCategoryButton ? activeCategoryButton.id : null;
 
-                if (category && newsData[category][index]) {
-                    const selectedNewsItem = newsData[category][index];
+                if (category && currentNewsList[index]) {
+                    const selectedNewsItem = currentNewsList[index];
 
                     // Remove any existing news details
                     if (currentNewsDetailElement) {

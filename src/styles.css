@@ -16,6 +16,8 @@ body {
 }
 
 .title {
+    margin-top: 0;
+    margin-bottom: 10px;
     font-size: 4rem;
     color: #333;
     opacity: 0;
@@ -38,16 +40,16 @@ body {
 
 .main-content {
     /* flex: 1; */
-    padding: 20px;
+    margin: 20px;
+    margin-bottom: 0;
     width: 90%;
-    margin: 0 auto;
-
+    overflow: hidden; /* Prevents overflow */
 }
 
 .stock-graph {
     width: 100%;
     height: 200px;
-    background-color: #e0e0e0;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -60,20 +62,41 @@ body {
 
 .date-range-selector {
     display: flex;
-    justify-content: space-between;
+    justify-content:flex-end;
+    flex-direction: row;
     margin-bottom: 10px;
     text-align: center;
-    max-width: inherit;
+    max-width: 100%;
+    
 }
 
-.date-range-selector button {
-    font-size: 1ex;
-    margin: 5px;
-    padding: 0;
-    cursor: pointer;
-    border: 1px solid #ddd;
-    background-color: #f0f0f0;
+#dateRangeSlider {
+    -webkit-appearance: none; /* Removes default styling */
+    appearance: none;
+    height: 10px;
+    width: 7%;
+    text-align: right;
+    margin-left: 10px;
+    background: #111; /* Track background color */
+    transition: opacity .15s ease-in-out;
+    outline: none; /* Remove outline */
+    opacity: 0.7; 
     border-radius: 5px;
+
+}
+
+
+
+/* WebKit browsers (Chrome, Safari) */
+#dateRangeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Removes default styling */
+    appearance: none;
+    width: 20px; /* Width of the thumb (ball) */
+    height: 20px; /* Height of the thumb (ball) */
+    background: rgb(218, 24, 24); /* Thumb color (Change this to your desired color) */
+    cursor: pointer;
+    border-radius: 30%; /* Makes the thumb circular */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Adds a slight shadow for better visibility */
 }
 
 .date-range-selector button:hover {
@@ -88,8 +111,9 @@ body {
 
 .category-buttons {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px;
 }
 
 .category-buttons button {
@@ -118,12 +142,13 @@ body {
 .news-container {
     display: flex;
     gap: 20px;
+    flex-wrap: wrap; /* Allows items to wrap onto the next line */
 }
 
 #news-list {
     flex: 2;
     flex-grow: 1; /* Allows the news list to grow and shrink with the window size */
-    max-height: calc(8 * 4rem); /* 4 items, each 5rem tall */
+    max-height: calc(7 * 4rem); /* 4 items, each 5rem tall */
     overflow-y: scroll; /* Enable vertical scrolling */
     overflow-x: hidden; /* Prevent horizontal scrolling */
     padding: 10px; /* Optional: Adjust padding to make the content look good */
@@ -150,6 +175,7 @@ body {
 
 
 .news-item {
+    width: 95%; /* Ensure consistent width */
     background-color: white;
     padding: 15px;
     margin-bottom: 15px;
@@ -163,7 +189,9 @@ body {
 }
 
 .news-detail {
+    opacity: 0;
     flex: 1;
+    height: 25rem;
     background-color: white;
     padding: 20px;
     border-radius: 5px;
