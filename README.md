@@ -7,7 +7,7 @@ sudo docker image build -t stock-frontend .
 sudo docker run -p 3000:3000 stock-frontend
 
 
-# StoxNews Frontend
+## StoxNews Frontend
 The following demonstrates the sequence diagram for the frontend
 
 ```mermaid
@@ -42,3 +42,4 @@ sequenceDiagram
     StockFetcher-->>ErrorMsg: Error if fetching fails
     UI->>User: Shows graph and news list
     ErrorMsg->>UI: Display error message if data fetch fails
+```
