@@ -43,3 +43,14 @@ sequenceDiagram
     UI->>User: Shows graph and news list
     ErrorMsg->>UI: Display error message if data fetch fails
 ```
+## Tasks done
+2024/10/25 improved GUI
+2024/10/25 News Integrated
+2024/10/20 improved GUI
+2024/10/18 graph added, files modularized 
+2024/10/14 Backend data integration
+2024/10/05 Docker image built
+2024/10/04 Nginx set up
+2024/09/27 draft web UI(html/js/css) with mockdata
+2024/09/20 UI figma design
+2024/09/14 Information research
