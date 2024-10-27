@@ -5,7 +5,7 @@ How to run frontend
 ```
 sudo docker image build -t stock-frontend .
 sudo docker run -p 3000:3000 stock-frontend
-
+```
 
 ## StoxNews Frontend
 The following demonstrates the sequence diagram for the frontend
