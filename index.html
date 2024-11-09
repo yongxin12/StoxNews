@@ -22,12 +22,19 @@
     <div class="app-container">
         <aside class="sidebar">
             <nav>
+                <a href="#" id="stoxnews-logo">
+                    <!-- <img src="path/to/your/stoxnews-logo.png" alt="StoxNews Logo"> -->
+                    StoxNews
+                </a>
                 <ul>
-                    <li><a href="#news">News</a></li>
-                    <li><a href="#profile">Profile</a></li>
-                    <li><a href="#import">Import</a></li>
-                    <li><a href="#security">Security</a></li>
-                    <li><a href="#settings">Settings</a></li>
+                    <li id="news-link">News</li>
+                    <li id="dashboard-link">Dashboard</li>
+                    <!-- <li><a href="#profile">Profile</a></li> -->
+                    <!-- <li><a href="#import">Import</a></li> -->
+                    <!-- <li><a href="#security">Security</a></li> -->
+                    <!-- <li><a href="#settings">Settings</a></li> -->
+
+
                 </ul>
             </nav>
             <div class="sidebar-footer">
@@ -37,38 +44,69 @@
         </aside>
 
         <main class="main-content">
-            <h1 class="title centered-title" id="title">StoxNews</h1>
-            <h2>NEWS</h2>
-            <h3 id="stock-name">TSLA</h3>
+            <section id="home-section" class="content-section">
+                <h1 class="title" id="title">StoxNews</h1>
 
-            <div class="stock-graph">
-                <canvas id="stockGraphElement" width="400" height="200"></canvas>
-            </div>
+                <div class="stock-input">
+                    <input id="home-stock-input" type="text" placeholder="">
+                    <button id="home-search-btn">Fetch News</button>
+                </div>
 
-
-            <div class="stock-input">
-                <input type="text" id="stock-input" placeholder="">
-                <button id="search-btn">Fetch News</button>
-            </div>
-
-            <div class="category-buttons">
-                <button id="financial-performance-btn">Financial Performance</button>
-                <button id="competitive-positioning-btn">Competitive Positioning</button>
-                <button id="industry-trends-btn">Industry Trends</button>
-                <button id="regulatory-impact-btn">Regulatory Impact</button>
-            </div>
-            <div class="date-range-selector">
-                <label for="dateRangeSlider">Select Range</label>
-                <input type="range" min="1" max="4" step="1" value="4" id="dateRangeSlider">
-            </div>
+            </section>
 
 
-            <div id="error-message" class="error-message"></div>
+            <section id="news-section" class="content-section" style="display: none;">
+                <h2>NEWS</h2>
+                <h3 id="stock-name">TSLA</h3>
+                <div class="date-range-selector">
+                    <label for="dateRangeSlider">Select Range</label>
+                    <input type="range" min="1" max="4" step="1" value="4" id="dateRangeSlider">
+                </div>
+                <div class="stock-graph">
+                    <canvas id="stockGraphElement" width="400" height="200"></canvas>
+                </div>
 
-            <div class="news-container">
-                <div id="news-list" class="section news-list"></div>
-                <div id="news-detail" class="section news-detail"></div>
-            </div>
+
+                <div class="stock-input">
+                    <input type="text" id="stock-input" >
+                    <button id="search-btn">Fetch News</button>
+                </div>
+
+                <div class="category-buttons">
+                    <button id="financial-performance-btn">Financial Performance</button>
+                    <button id="competitive-positioning-btn">Competitive Positioning</button>
+                    <button id="industry-trends-btn">Industry Trends</button>
+                    <button id="regulatory-impact-btn">Regulatory Impact</button>
+                </div>
+                
+
+
+                <div id="error-message" class="error-message"></div>
+
+                <div class="news-container">
+                    <div id="news-list" class="section news-list"></div>
+                    <div id="news-detail" class="section news-detail"></div>
+                </div>
+            </section>
+
+            <section id="dashboard-section" class="content-section" style="display: none;">
+                <!-- Add Dashboard Content Here -->
+                <h2>Dashboard</h2>
+                <h3 id="stock-name">TSLA</h3>
+                <div class="stock-graph">
+                    <canvas id="stockDashboardGraph" width="400" height="200"></canvas>
+                </div>
+
+                <div class="ranking-section">
+                    <div class="ranking-filters">
+                        <button id="top-gainers" class="filter-button">Top Gainers</button>
+                        <button id="top-losers" class="filter-button">Top Losers</button>
+                    </div>
+                    <ul id="ranking-list" class="ranking-list">
+                        <!-- Dynamic list items to be inserted here -->
+                    </ul>
+                </div>
+            </section>
         </main>
     </div>
 </body>

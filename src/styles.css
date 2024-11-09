@@ -3,6 +3,7 @@
 @import url('./css/visibility.css');
 @import url('./css/animations.css');
 @import url('./css/navbar.css');
+@import url('./css/dashboard-section.css');
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -21,16 +22,13 @@ body {
     font-size: 4rem;
     color: #333;
     opacity: 0;
-    transform: translateY(-20px); 
-    animation: fadeInUp 2s forwards;
-    transition: all 0.5s ease;
-}
-
-.centered-title {
     position: fixed;
     top: 20%;
     left: 50%;
+    /* transform: translateY(-20px);  */
     transform: translate(-50%, -50%); 
+    animation: fadeInUp 2s forwards;
+    transition: all 0.5s ease;
 }
 
 .app-container {
@@ -113,7 +111,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 20px;
-    margin: 20px;
+    margin-top: 20px;
 }
 
 .category-buttons button {
@@ -237,7 +235,6 @@ body {
 
     }
     .title {
-        
         text-align: center; /* Center text */
         margin: 0 auto; /* Center the title element */
         font-size: 3rem;
@@ -295,7 +292,7 @@ body {
 
     .category-buttons button {
         flex: 1 1 40%;
-        margin: 5px;
+        margin: 0px;
         
     }
 
