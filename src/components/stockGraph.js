@@ -11,7 +11,7 @@ export class StockGraph {
     // Method to initialize and generate the graph
     generateGraph(stockData, range, newsDates = [], stockSymbol) {
         const parsedData = this.parseStockData(stockData); // Parse the stock data
-        console.log(newsDates);
+        console.log(stockData);
         this.stockSymbolDisplayElement.textContent = stockSymbol;
         // Data for the chart
         const data = {

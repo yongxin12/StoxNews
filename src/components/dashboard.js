@@ -26,7 +26,7 @@ export class Dashboard {
                 this.updateGraphForNews(affectedSymbol, newsDate);
             }
         });
-    
+
     }
 
     async fetchAndDisplayNews(type) {
@@ -44,26 +44,37 @@ export class Dashboard {
     displayNews(newsData) {
         this.rankingListElement.innerHTML = ''; // Clear previous items
 
-        newsData.forEach((news, index) => {
+        const groupedNewsData = newsData.reduce((acc, news) => {
+            const key = `${news.affected_stock_value_percentage}-${news.affected_symbol}`;
+            if (!acc[key]) {
+                acc[key] = { ...news, aggregated: [] }; // Create a new group
+            }
+            acc[key].aggregated.push(news); // Add news to the group
+            return acc;
+        }, {});
+    
+       
+        Object.values(groupedNewsData).forEach((group, index) => {
             const listItem = document.createElement('li');
             listItem.classList.add('ranking-item');
-            listItem.setAttribute('data-rank', index + 1);  // Rank number
-            listItem.setAttribute('data-symbol', news.affected_symbol);  // Symbol for fetching stock data
-            listItem.setAttribute('data-date', news.date);  // Date for timestamp
-
-            // Determine the class for the percentage based on gain or loss
-            const percentageClass = news.affected_stock_value_percentage > 0 ? 'gain' : 'loss';
-
+            listItem.setAttribute('data-rank', index + 1); // Rank number
+            listItem.setAttribute('data-symbol', group.affected_symbol); // Symbol
+            listItem.setAttribute('data-date', group.date); // Date
+    
+            const percentageClass = group.affected_stock_value_percentage > 0 ? 'gain' : 'loss';
+    
+            
+            const aggregatedTitles = group.aggregated.map(item => `<li><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.title}</a></li>`).join('');
+    
             listItem.innerHTML = `
-                <a href="#" onclick="return false;">
-                    <h4>${news.title}</h4>
-                    <p>${news.publisher} - ${news.date}</p>
-                    <p>${news.summary}</p>
-                    <a href="${news.url}" target="_blank" rel="noopener noreferrer">Read full article</a>
-                    <span class="${percentageClass}">${news.affected_stock_value_percentage}%</span>
-                </a>
+                <div>
+                    <h4>${group.affected_symbol}</h4>
+                    <span class="${percentageClass}">${group.affected_stock_value_percentage}%</span>
+                    <ul>${aggregatedTitles}</ul>
+                    
+                </div>
             `;
-
+    
             this.rankingListElement.appendChild(listItem);
         });
     }
@@ -73,9 +84,21 @@ export class Dashboard {
             // Fetch stock data for the affected symbol
             const stockData = await this.stockDataFetcher.fetchStockData(symbol);
             if (!stockData) throw new Error(`No data found for symbol: ${symbol}`);
-
+            
             // Update the graph and highlight the news date
-            this.stockGraph.generateGraph(stockData, '1M', [newsDate], symbol);
+            const now = new Date(newsDate)
+            const startDate = new Date();
+            const endDate = new Date();
+            startDate.setDate(now.getDate() - 7);
+            endDate.setDate(now.getDate() + 7);
+            // console.log(newsDate);
+            // console.log(stockData);
+            const filteredStockData = stockData.filter(item => {
+                const itemDate = new Date(item.date);
+                return itemDate >= startDate && itemDate <= endDate;
+            });
+
+            this.stockGraph.generateGraph(filteredStockData, '1M', [newsDate], symbol);
         } catch (error) {
             console.error(`Error updating graph for symbol ${symbol}:`, error);
         }

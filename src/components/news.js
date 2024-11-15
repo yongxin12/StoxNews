@@ -7,7 +7,7 @@ export class News {
     constructor(stockSymbol, apiBaseUrl) {
         this.stockSymbol = stockSymbol;
         this.apiBaseUrl = apiBaseUrl;
-        this.stockGraph = new StockGraph(document.getElementById('stockGraphElement'));
+        this.stockGraph = new StockGraph(document.getElementById('stockGraphElement'), document.getElementById('stock-name'));
         this.stockDataFetcher = new StockDataFetcher(this.apiBaseUrl);
         this.stockData = [];
         this.newsData = null;
@@ -60,7 +60,7 @@ export class News {
                     this.newsData = this.stockDataFetcher.getNewsData();
                 }
     
-                this.stockGraph.generateGraph(this.stockData, 'all', stockSymbol=stockSymbol);
+                this.stockGraph.generateGraph(this.stockData, 'all', [], stockSymbol=stockSymbol);
     
             } catch (error) {
                 this.errorMessage.textContent = `An error occurred: ${error.message}`;
@@ -78,7 +78,7 @@ export class News {
             console.log(filteredNewsData);
     
             const newsDates = filteredNewsData.map(newsItem => newsItem.date);
-            this.stockGraph.generateGraph(filteredStockData, range, newsDates);
+            this.stockGraph.generateGraph(filteredStockData, range, newsDates, this.currentSymbol);
             this.renderNewsList(filteredNewsData);
         });
 

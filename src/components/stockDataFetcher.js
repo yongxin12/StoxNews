@@ -37,6 +37,10 @@ export class StockDataFetcher {
             'industry-trends-btn': 'industry',
             'regulatory-impact-btn': 'general'
         };
+        const newCategories = {
+            'gaining-related-btn': 'gaining',
+            'losing-related-btn': 'losing',
+        }
         try {
 
             const categoryPromises = Object.entries(categories).map(async ([btn, type]) => {
@@ -173,6 +177,24 @@ export class StockDataFetcher {
             // Wait for all the fetch operations to complete
             await Promise.all(categoryPromises);
 
+        } catch (error) {
+            console.error('Error fetching news data:', error);
+
+        }
+
+        try {
+            const categoryPromises = Object.entries(newCategories).map(async ([btn, type]) => {
+                const response = await fetch(`${this.apiBaseUrl}/api/breaking_news?type=${type}&symbol=${stockSymbol}`);
+                if (!response.ok) throw new Error(`Failed to fetch news for ${type}`);
+                const data = await response.json();
+                console.log(`Response for ${type}:`, data); // Log the full response
+                if (data) {
+                    data.sort((a, b) => b.time_published - a.time_published);
+                }
+                console.log(data);
+                this.newsData[btn] = data;
+            });
+            await Promise.all(categoryPromises);
         } catch (error) {
             console.error('Error fetching news data:', error);
 
