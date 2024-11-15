@@ -1,5 +1,4 @@
 import { DynamicPlaceholder } from './animation.js';
-import { setupNews } from './news.js';
 
 export class Home {
     static instance = null;  // Static property to hold the singleton instance
@@ -33,8 +32,11 @@ export class Home {
         this.searchButton.addEventListener('click', () => {
             const stockSymbol = this.stockInput.value.trim().toUpperCase();
             if (stockSymbol) {
+                this.stockInput.value = "";
                 document.getElementById('home-section').style.display = 'none'; // Hide home
                 document.getElementById('news-section').style.display = 'block'; // Show news
+                document.getElementById('news-stock-input').value = stockSymbol;
+                document.getElementById('news-search-btn').click();
             }
         });
     }

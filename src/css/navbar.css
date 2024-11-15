@@ -14,7 +14,25 @@
     animation: slideIn 1s forwards;
 }
 
+#stoxnews-logo {
+    top: 10px; /* Adjust based on positioning */
+    left: 10px; /* Adjust based on positioning */
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.3s ease-in-out; /* Smooth animation */
+}
 
+#stoxnews-logo img {
+    width: 50px; /* Set logo size */
+    height: auto;
+}
+
+#stoxnews-logo:hover {
+    transform: scale(1.02); /* Slightly enlarge on hover */
+}
 
 .sidebar nav ul {
     width: 100%;
@@ -26,10 +44,10 @@
 .sidebar nav ul li {
     margin-bottom: 10px;
     padding: 20px;
-    
+
 }
 
-.sidebar nav ul li:hover{
+.sidebar nav ul li:hover {
     background-color: rgb(255, 85, 0);
     cursor: pointer;
 }

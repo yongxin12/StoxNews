@@ -16,7 +16,7 @@ export function setupNavigation() {
 
         // Show the selected section
         if (sectionToShow === 'home') {
-            homeSection.style.display = 'block';
+            homeSection.style.display = 'flex';
         } else if (sectionToShow === 'news') {
             newsSection.style.display = 'block';
         } else if (sectionToShow === 'dashboard') {

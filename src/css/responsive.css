@@ -1,0 +1,129 @@
+
+/* Enhancements for Mobile Responsiveness */
+@media (max-width: 768px) {
+
+    html, body {
+        width: 100%;
+        max-width: 100%;  /* Prevents any content from exceeding 100% of viewport width */
+        overflow-x: hidden;  /* Prevent horizontal scrolling */
+
+    }
+    .title {
+        text-align: center; /* Center text */
+        margin: 0 auto; /* Center the title element */
+        font-size: 3rem;
+        color: #333;
+        opacity: 0;
+        transform: translateY(-20px); 
+        animation: fadeInUp 2s forwards;
+        transition: all 0.5s ease;
+    }
+    .centered-title {
+        opacity: 1;
+        position: static; /* Resets to default flow */
+        top: auto;
+        left: auto;
+        
+    }
+    .app-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        max-width: 100%;
+        max-height: 60px;
+        display: flex;
+        justify-content: center;
+        flex-direction:row;
+        animation: slideInTop 1s forwards;
+        
+    }
+
+    .sidebar nav ul {
+        display: flex;
+        justify-content: space-between;
+        flex-direction:row;
+        height: fit-content;
+        padding: 0;
+    }
+    .sidebar nav ul li {
+        
+        padding: 10px;
+    }
+    .sidebar-footer a {
+        margin-top: 5px;
+    }
+
+
+
+    .main-content {
+        padding: 10px;
+    }
+
+    .category-buttons {
+        flex-wrap: wrap;
+    }
+
+    .category-buttons button {
+        flex: 1 1 40%;
+        margin: 0px;
+        
+    }
+
+    .stock-input {
+        flex-direction: row;
+    }
+
+    .stock-input input, 
+    .stock-input button {
+        margin-bottom: 5px;
+    }
+    .stock-input button:hover {
+        background-color: rgb(255, 85, 0);
+        cursor: pointer;
+    }
+
+    .news-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .news-list {
+        width: 100%;
+    }
+
+
+    .news-item {
+        padding: 10px;
+    }
+    .news-detail {
+        opacity: 1;
+        flex: 1;
+        height: auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .sidebar {
+        display: none;
+    }
+
+    .toggle-menu {
+        display: block;
+        
+    }
+
+    .sidebar.visible {
+        padding: 0;
+        margin: 0;
+        display: block;
+
+    }
+
+
+}
+
+
+
+

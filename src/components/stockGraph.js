@@ -1,95 +1,18 @@
 // src/components/stockGraph.js
 
 
-import { formatXAxisLabels } from '../utils/dateHelper.js';
-
-
-export class StockGraph1 {
-    constructor(element) {
-        this.chartElement = element;
-        this.chartInstance = null;
-    }
-
-    render(stockData, range) {
-        const ctx = document.createElement('canvas');
-        this.chartElement.innerHTML = '';  // Clear existing content
-        this.chartElement.appendChild(ctx);
-
-        const dates = stockData.map(item => new Date(item.date));
-        const prices = stockData.map(item => item.close);
-
-        if (this.chartInstance) {
-            this.chartInstance.destroy();  // Destroy old chart instance
-        };
-
-        const options = {
-            responsive: true,
-            maintainAspectRatio: false,
-            fill: false,
-            scales: {
-                x: {
-                    type: 'category',
-                    title: {
-                        display: true,
-                        text: 'Date',
-                        font: { size: 14 }
-                    },
-                    ticks: {
-                        maxRotation: 45,
-                        minRotation: 45,
-                        autoSkip: true,
-                        maxTicksLimit: 10,
-                        font: { size: 12 }
-                    }
-                },
-                y: {
-                    display: true,  // Ensure y-axis is displayed
-                    position: 'left',  // Position y-axis on the left
-                    title: {
-                        display: true,
-                        text: 'Price (USD)',
-                        font: { size: 14 }
-                    },
-                    ticks: {
-                        beginAtZero: true,
-                        font: { size: 12 },
-                        // Ensure a reasonable number of ticks
-                        count: 10
-                    },
-                    grid: {
-                        color: 'rgba(200, 200, 200, 0.2)',
-                        borderDash: [5, 5]
-                    }
-                }
-            }
-        };
-
-        this.chartInstance = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: dates,
-                datasets: [{
-                    label: 'Closing Price',
-                    data: prices,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    fill: false,
-                }]
-            },
-            options: options,
-        });
-    }
-}
-
 export class StockGraph {
-    constructor(stockGraphElement) {
+    constructor(stockGraphElement, stockSymbolDisplayElement) {
         this.stockGraphElement = stockGraphElement; // The canvas element or container where the graph will be rendered
         this.chart = null; // Will store the chart instance
+        this.stockSymbolDisplayElement = stockSymbolDisplayElement;
     }
 
     // Method to initialize and generate the graph
-    generateGraph(stockData, range, newsDates = []) {
+    generateGraph(stockData, range, newsDates = [], stockSymbol) {
         const parsedData = this.parseStockData(stockData); // Parse the stock data
         console.log(newsDates);
+        this.stockSymbolDisplayElement.textContent = stockSymbol;
         // Data for the chart
         const data = {
             labels: parsedData.dates,  // The dates (X-axis)

@@ -2,14 +2,13 @@ import { StockGraph } from './stockGraph.js';
 import { StockDataFetcher } from './stockDataFetcher.js';
 
 export class Dashboard {
-    constructor(stockSymbol, apiBaseUrl, stockGraphElement, rankingListElement, topGainersButton, topLosersButton) {
-        this.stockSymbol = stockSymbol;
+    constructor(apiBaseUrl) {
         this.apiBaseUrl = apiBaseUrl;
-        this.stockGraph = new StockGraph(stockGraphElement);
+        this.stockGraph = new StockGraph(document.getElementById('stockDashboardGraph'), document.getElementById('dashboard-stock-name'));
         this.stockDataFetcher = new StockDataFetcher(apiBaseUrl);
-        this.rankingListElement = rankingListElement;
-        this.topGainersButton = topGainersButton;
-        this.topLosersButton = topLosersButton;
+        this.rankingListElement = document.getElementById('ranking-list');
+        this.topGainersButton = document.getElementById('top-gainers');
+        this.topLosersButton = document.getElementById('top-losers');
 
         this.initializeEventListeners();
     }
@@ -23,6 +22,7 @@ export class Dashboard {
             if (listItem) {
                 const affectedSymbol = listItem.dataset.symbol; // Symbol to fetch data for
                 const newsDate = listItem.dataset.date; // Date for timestamp
+                this.stockSymbol = affectedSymbol
                 this.updateGraphForNews(affectedSymbol, newsDate);
             }
         });
@@ -75,7 +75,7 @@ export class Dashboard {
             if (!stockData) throw new Error(`No data found for symbol: ${symbol}`);
 
             // Update the graph and highlight the news date
-            this.stockGraph.generateGraph(stockData, '1M', [newsDate]);
+            this.stockGraph.generateGraph(stockData, '1M', [newsDate], symbol);
         } catch (error) {
             console.error(`Error updating graph for symbol ${symbol}:`, error);
         }

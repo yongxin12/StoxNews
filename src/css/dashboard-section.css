@@ -1,0 +1,89 @@
+/* Ensure the dashboard section occupies full screen height */
+#dashboard-section {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    overflow: hidden; /* Prevents the dashboard itself from scrolling */
+}
+
+.ranking-section {
+    flex-grow: 1;
+    overflow-y: auto; /* Enables vertical scrolling */
+    padding: 20px;
+    border-top: 1px solid #ddd;
+    max-height: calc(100vh - 120px); /* Ensures it doesn't exceed available space */
+}
+
+/* Styling each ranking item */
+.ranking-item {
+    display: flex;
+    align-items: flex-start; /* Ensures all items are aligned from the top */
+    padding: 10px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #e0e0e0;
+    transition: background-color 0.2s;
+}
+
+.ranking-item:hover {
+    background-color: #f9f9f9;
+}
+
+#ranking-list {
+    margin-bottom: 0;
+}
+
+.ranking-item::before {
+    content: attr(data-rank);
+    font-size: 1em;
+    font-weight: bold;
+    color: #555;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+/* Flex layout for title and summary */
+.ranking-item a {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-decoration: none;
+    color: #333;
+}
+
+/* Adjustments for title and summary for consistent alignment */
+.ranking-item h4 {
+    font-size: 1em;
+    color: #333;
+    margin: 0;
+    font-weight: 600;
+}
+
+.ranking-item p {
+    margin: 2px 0;
+    color: #888;
+    font-size: 0.85em;
+}
+
+/* Span for percentage with auto-alignment to the right */
+.ranking-item span {
+    font-weight: bold;
+    color: #d9534f;
+    font-size: 0.9em;
+    margin-left: auto;
+    align-self: flex-start; /* Ensures percentage aligns at the top */
+}
+/* Specific colors for positive and negative percentages */
+.ranking-item span.gain {
+    color: #28a745; /* Green for gains */
+}
+
+.ranking-item span.loss {
+    color: #d9534f; /* Red for losses */
+}

@@ -1,6 +1,6 @@
 // src/index.js
 import { setupNavigation } from './components/navigation.js';
-import { setupNews, News } from './components/news.js';
+import { News } from './components/news.js';
 import { Dashboard } from './components/dashboard.js';
 import { Home } from './components/homepage.js';
 
@@ -11,12 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const stockSymbol = 'TSLA';  // Default or dynamic stock symbol
     const apiBaseUrl = 'http://localhost:5001';  // API base URL
     const dashboard = new Dashboard(
-        'TSLA',
         apiBaseUrl,
-        document.getElementById('stockDashboardGraph'),
-        document.getElementById('ranking-list'),
-        document.getElementById('top-gainers'),
-        document.getElementById('top-losers')
     );
     dashboard.initializeDashboard();
 
@@ -24,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const home = Home.getInstance(); 
 
-    news.initializeNews();
+    // news.initializeNews();
 
     setupNavigation();
 

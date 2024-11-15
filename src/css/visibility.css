@@ -1,7 +1,7 @@
 /* Initially hide the elements except sidebar, h1, and stock-input */
-.main-content > *:not(.title):not(.stock-input):not(h1) {
+/* .main-content > *:not(.title):not(.stock-input):not(h1):not(#news-section) {
     opacity: 0;
-}
+} */
 
 /* Add classes for animating elements when they appear */
 .show-element {

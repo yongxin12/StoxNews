@@ -188,5 +188,27 @@ export class StockDataFetcher {
         }
     }
 
+}
 
+export class BreakingNewsFetcher {
+    constructor(apiBaseUrl) {
+        this.apiBaseUrl = apiBaseUrl;
+        this.stockData = [];
+        this.newsData = {};
+    }
+
+    async fetchStockData(stockSymbol) {
+        try {
+            const response = await fetch(`${this.apiBaseUrl}/api/stock?symbol=${stockSymbol}`);
+            if (!response.ok) throw new Error('Failed to fetch stock data');
+            const data = await response.json();
+            this.stockData = data.stock_info;
+            return this.stockData;
+        } catch (error) {
+            console.error('Error fetching stock data:', error);
+            return [];
+        }
+    }
+
+    
 }

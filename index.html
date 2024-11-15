@@ -33,8 +33,6 @@
                     <!-- <li><a href="#import">Import</a></li> -->
                     <!-- <li><a href="#security">Security</a></li> -->
                     <!-- <li><a href="#settings">Settings</a></li> -->
-
-
                 </ul>
             </nav>
             <div class="sidebar-footer">
@@ -45,9 +43,9 @@
 
         <main class="main-content">
             <section id="home-section" class="content-section">
-                <h1 class="title" id="title">StoxNews</h1>
+                <h1 id="title">StoxNews</h1>
 
-                <div class="stock-input">
+                <div class="home-stock-input">
                     <input id="home-stock-input" type="text" placeholder="">
                     <button id="home-search-btn">Fetch News</button>
                 </div>
@@ -57,7 +55,14 @@
 
             <section id="news-section" class="content-section" style="display: none;">
                 <h2>NEWS</h2>
+
+                <div class="news-stock-input">
+                    <input type="text" id="news-stock-input" >
+                    <button id="news-search-btn">Fetch News</button>
+                </div>
+
                 <h3 id="stock-name">TSLA</h3>
+                
                 <div class="date-range-selector">
                     <label for="dateRangeSlider">Select Range</label>
                     <input type="range" min="1" max="4" step="1" value="4" id="dateRangeSlider">
@@ -66,11 +71,6 @@
                     <canvas id="stockGraphElement" width="400" height="200"></canvas>
                 </div>
 
-
-                <div class="stock-input">
-                    <input type="text" id="stock-input" >
-                    <button id="search-btn">Fetch News</button>
-                </div>
 
                 <div class="category-buttons">
                     <button id="financial-performance-btn">Financial Performance</button>
@@ -92,7 +92,7 @@
             <section id="dashboard-section" class="content-section" style="display: none;">
                 <!-- Add Dashboard Content Here -->
                 <h2>Dashboard</h2>
-                <h3 id="stock-name">TSLA</h3>
+                <h3 id="dashboard-stock-name">TSLA</h3>
                 <div class="stock-graph">
                     <canvas id="stockDashboardGraph" width="400" height="200"></canvas>
                 </div>
