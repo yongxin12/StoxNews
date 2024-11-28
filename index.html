@@ -15,7 +15,8 @@
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js"></script>
     <script
         src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.3.0/dist/chartjs-plugin-annotation.min.js"></script>
-
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"></script>
 </head>
 
 <body>
@@ -49,6 +50,7 @@
                     <input id="home-stock-input" type="text" placeholder="">
                     <button id="home-search-btn">Fetch News</button>
                 </div>
+                <div id="word-cloud-container" style="width: 100%; height: 300px;"></div>
 
             </section>
 
@@ -57,12 +59,12 @@
                 <h2>NEWS</h2>
 
                 <div class="news-stock-input">
-                    <input type="text" id="news-stock-input" >
+                    <input type="text" id="news-stock-input">
                     <button id="news-search-btn">Fetch News</button>
                 </div>
 
                 <h3 id="stock-name">TSLA</h3>
-                
+
                 <div class="date-range-selector">
                     <label for="dateRangeSlider">Select Range</label>
                     <input type="range" min="1" max="4" step="1" value="4" id="dateRangeSlider">
@@ -80,7 +82,7 @@
                     <button id="gaining-related-btn">Gaining Related</button>
                     <button id="losing-related-btn">Losing Related</button>
                 </div>
-                
+
 
 
                 <div id="error-message" class="error-message"></div>
