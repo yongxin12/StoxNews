@@ -41,6 +41,11 @@ export class StockDataFetcher {
             'gaining-related-btn': 'gaining',
             'losing-related-btn': 'losing',
         }
+
+        const topCategories = {
+            'gaining-summary-btn': 'gaining',
+            'losing-summary-btn': 'losing'
+        }
         try {
 
             const categoryPromises = Object.entries(categories).map(async ([btn, type]) => {
@@ -199,6 +204,26 @@ export class StockDataFetcher {
             console.error('Error fetching news data:', error);
 
         }
+
+        try {
+            const response = await fetch(`${this.apiBaseUrl}/api/top_news_analysis?symbol=${stockSymbol}`);
+            if (!response.ok) throw new Error(`Failed to fetch news for ${type}`);
+                const data = await response.json();
+            if (data) {
+                const gaining = data.gaining.sort((a, b) => new Date(b.date) - new Date(a.date));
+                const losing = data.losing.sort((a, b) => new Date(b.date) - new Date(a.date));
+            }
+
+            Object.entries(topCategories).map(([btn, type]) => {
+                console.log(`Response for ${type}:`, data); // Log the full response
+                this.newsData[btn] = data[type];
+            });
+
+        } catch (error) {
+            console.error('Error fetching news data:', error);
+
+        }
+
     }
 
     // Add the getNewsData method

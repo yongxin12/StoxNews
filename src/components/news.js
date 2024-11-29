@@ -11,7 +11,7 @@ export class News {
         this.stockDataFetcher = new StockDataFetcher(this.apiBaseUrl);
         this.stockData = [];
         this.newsData = null;
-        
+
 
         this.dateRangeSlider = document.querySelector('#dateRangeSlider');
         this.dateRanges = ['7d', '1m', '3m', '6m'];
@@ -19,15 +19,15 @@ export class News {
         this.stockSymbolElement = document.getElementById('stock-name');
         this.stockInput = document.getElementById('news-stock-input');
         this.fetchNewsButton = document.getElementById('news-search-btn');
-    
+
         this.newsList = document.getElementById('news-list');
         this.newsDetail = document.getElementById('news-detail');
         this.errorMessage = document.getElementById('error-message');
         this.categoryButtonsContainer = document.querySelector('.category-buttons');
-    
+
         this.currentNewsDetailIndex = null;  // Track which news detail is open
         this.currentNewsDetailElement = null; // Track the current detail element
-    
+
         this.ranges = {
             '7d': 7,
             '1m': 30,
@@ -35,11 +35,11 @@ export class News {
             '6m': 180,
             'all': Infinity
         };
-    
+
         this.currentButtonId = null;
         this.currentSymbol = null;
         this.currentNewsList = null;
-    
+
         this.initializeEventListeners();
     }
 
@@ -59,9 +59,9 @@ export class News {
                     await this.stockDataFetcher.fetchNewsData(stockSymbol);
                     this.newsData = this.stockDataFetcher.getNewsData();
                 }
-    
-                this.stockGraph.generateGraph(this.stockData, 'all', [], stockSymbol=stockSymbol);
-    
+
+                this.stockGraph.generateGraph(this.stockData, 'all', [], stockSymbol = stockSymbol);
+
             } catch (error) {
                 this.errorMessage.textContent = `An error occurred: ${error.message}`;
                 this.newsList.innerHTML = '';
@@ -71,12 +71,12 @@ export class News {
         this.dateRangeSlider.addEventListener('input', async (event) => {
             const rangeIndex = parseInt(event.target.value) - 1;
             const range = this.dateRanges[rangeIndex];
-    
+
             const filteredStockData = this.filterStockDataByRange(this.stockData, range);
             const filteredNewsData = this.filterNewsDataByRange(this.newsData, range);
-    
+
             console.log(filteredNewsData);
-    
+
             const newsDates = filteredNewsData.map(newsItem => newsItem.date);
             this.stockGraph.generateGraph(filteredStockData, range, newsDates, this.currentSymbol);
             this.renderNewsList(filteredNewsData);
@@ -89,7 +89,7 @@ export class News {
                     btn.classList.remove('active');
                 });
                 event.target.classList.add('active');
-    
+
                 if (this.currentButtonId === 'competitive-positioning-btn') {
                     const competitiveNewsData = Object.entries(this.newsData[this.currentButtonId]).forEach(([symbol, news]) => {
                         this.currentNewsList = news;
@@ -98,6 +98,9 @@ export class News {
                 } else if (this.currentButtonId === 'industry-trends-btn') {
                     this.currentNewsList = this.newsData[this.currentButtonId];
                     this.renderNewsList(this.currentNewsList);
+                } else if (this.currentButtonId === 'gaining-summary-btn') {
+                    this.currentNewsList = this.newsData[this.currentButtonId];
+                    this.renderNewsAnalysisList(this.currentNewsList);
                 } else {
                     this.currentNewsList = this.newsData[this.currentButtonId];
                     this.renderNewsList(this.newsData[this.currentButtonId]);
@@ -108,19 +111,24 @@ export class News {
         this.newsList.addEventListener('click', (event) => {
             const newsItemElement = event.target.closest('.news-item');
             console.log("newsList item clicked");
-            
+
             if (!isMobile()) {
                 if (newsItemElement) {
-                    
+
                     const index = newsItemElement.dataset.index;
                     const activeCategoryButton = document.querySelector('.category-buttons button.active');
                     const category = activeCategoryButton ? activeCategoryButton.id : null;
-    
-                    if (category && this.currentNewsList[index]) {
-                        
+                    if (this.currentButtonId === 'gaining-summary-btn') {
+                        const selectedNewsItem = this.currentNewsList[index];
+                        const detailHTML = this.renderNewsAnalysisDetail(selectedNewsItem);
+                        newsItemElement.insertAdjacentHTML('afterend', detailHTML);
+                        this.currentNewsDetailIndex = index;
+                        this.currentNewsDetailElement = newsItemElement.nextElementSibling;
+                    } else if (category && this.currentNewsList[index]) {
+
                         const selectedNewsItem = this.currentNewsList[index];
                         this.renderNewsDetail(selectedNewsItem);
-                    }
+                    } 
                 }
             } else {
                 if (newsItemElement) {
@@ -251,6 +259,48 @@ export class News {
             <a href="${newsItem.url}" target="_blank" rel="noopener noreferrer">Read full article</a>
         </div>
     `;
+        }
+    }
+
+    renderNewsAnalysisList(news) {
+        if (!news) {
+            this.errorMessage.textContent = 'No valid news data available.';
+            this.newsList.innerHTML = '';
+            return;
+        } else {
+            this.errorMessage.textContent = '';
+            this.newsList.innerHTML = '';
+
+            this.newsList.innerHTML = news.map((item, index) => {
+                return `
+            <div class="news-item" data-index="${index}">
+                <div>
+                    <span> • </span>
+                    <time>${item.date}</time>
+                    <span>Summary: ${item.summary}</span>
+                    
+                </div>
+            </div>
+            `;
+            }).join('');
+        }
+    }
+
+
+    renderNewsAnalysisDetail(analysisItem) {
+        if (!isMobile()) {
+            const reasonsHTML = analysisItem.news.map(newsItem => `
+                <li>
+                    <strong>${newsItem.title}</strong>
+                    <p>${newsItem.correlated_reason}</p>
+                    <a href="${newsItem.url}" target="_blank" rel="noopener noreferrer">Read full article</a>
+                </li>
+            `).join('');
+
+            this.newsDetail.innerHTML = `
+            <h2>${analysisItem.type} Correlated Reason for ${analysisItem.date}</h2>
+            <ul class="correlated-reasons">${reasonsHTML}</ul>
+        `;
         }
     }
 
