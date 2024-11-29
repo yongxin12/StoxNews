@@ -121,11 +121,8 @@ export class News {
                     if (this.currentButtonId === 'gaining-summary-btn') {
                         const selectedNewsItem = this.currentNewsList[index];
                         const detailHTML = this.renderNewsAnalysisDetail(selectedNewsItem);
-                        newsItemElement.insertAdjacentHTML('afterend', detailHTML);
-                        this.currentNewsDetailIndex = index;
-                        this.currentNewsDetailElement = newsItemElement.nextElementSibling;
                     } else if (category && this.currentNewsList[index]) {
-
+                        console.log(1)
                         const selectedNewsItem = this.currentNewsList[index];
                         this.renderNewsDetail(selectedNewsItem);
                     } 
@@ -158,19 +155,6 @@ export class News {
             }
         });
     }
-
-    // async fetchAndDisplayCategoryNews(category) {
-    //     try {
-    //         const response = await fetch(`${this.apiBaseUrl}/api/news?category=${category}&symbol=${this.stockSymbol}`);
-    //         if (!response.ok) throw new Error(`Failed to fetch news for category ${category}`);
-    //         this.newsData = await response.json();
-    //         this.currentCategory = category;
-
-    //         this.renderNewsList();
-    //     } catch (error) {
-    //         console.error(`Error fetching news for category ${category}:`, error);
-    //     }
-    // }
 
     filterStockDataByRange(stockData, range) {
         const now = new Date();
@@ -218,7 +202,7 @@ export class News {
                 <div>
                     <span>${item.publisher}</span>
                     <span> • </span>
-                    <time>${new Date(item.time_published).toLocaleString()}</time>
+                    <time>${item.date}</time>
                 </div>
                 <a href="${item.url}" target="_blank" rel="noopener noreferrer">Read full article</a>
                 ${logoURL ? `<img src="${logoURL}" alt="${this.currentSymbol} logo" class="logo-image">` : ''}
@@ -242,9 +226,8 @@ export class News {
         if (!isMobile()) {
             this.newsDetail.innerHTML = `
             <h2>${newsItem.title}</h2>
-            <p>${newsItem.summary}</p>
             <p>Published by: ${newsItem.publisher}</p>
-            <p>Published on: ${new Date(newsItem.time_published).toLocaleString()}</p>
+            <p>Published on: ${newsItem.date}</p>
             <a href="${newsItem.url}" target="_blank" rel="noopener noreferrer">Read full article</a>
             ${logoURL ? `<img src="${logoURL}" alt="${this.currentSymbol} logo" class="logo-image">` : ''}
         `;
@@ -253,9 +236,8 @@ export class News {
             return `
         <div class="news-detail">
             <h2>${newsItem.title}</h2>
-            <p>${newsItem.summary}</p>
             <p>Published by: ${newsItem.publisher}</p>
-            <p>Published on: ${new Date(newsItem.time_published).toLocaleString()}</p>
+            <p>Published on: ${newsItem.date}</p>
             <a href="${newsItem.url}" target="_blank" rel="noopener noreferrer">Read full article</a>
         </div>
     `;
@@ -286,7 +268,6 @@ export class News {
         }
     }
 
-
     renderNewsAnalysisDetail(analysisItem) {
         if (!isMobile()) {
             const reasonsHTML = analysisItem.news.map(newsItem => `
@@ -304,11 +285,6 @@ export class News {
         }
     }
 
-    // async initializeNews() {
-    //     const stockData = await this.stockDataFetcher.fetchStockData(this.stockSymbol);
-    //     this.stockGraph.generateGraph(stockData, '1M');
-    //     this.fetchAndDisplayCategoryNews('financial-performance');
-    // }
 }
 
 

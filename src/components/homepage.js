@@ -51,20 +51,20 @@ export class Home {
 
     initializeWordCloud() {
         const keywords = [
-            { text: 'AAPL', size: 50 },
-            { text: 'TSLA', size: 45 },
-            { text: 'NVDA', size: 40 },
-            { text: 'MSFT', size: 35 },
+            { text: 'AAPL', size: 55 },
+            { text: 'TSLA', size: 55 },
+            { text: 'NVDA', size: 55 },
+            { text: 'MSFT', size: 50 },
             { text: 'AMZN', size: 50 },
-            { text: 'GOOG', size: 35 },
-            { text: 'META', size: 35 },
-            { text: 'AMD', size: 30 },
-            { text: 'AVGO', size: 20 },
-            { text: 'PDD', size: 25 },
-            { text: 'ON', size: 25 },
-            { text: 'KLAC', size: 25 },
-            { text: 'ASML', size: 20 },
-            { text: 'INTC', size: 30 },
+            { text: 'GOOG', size: 50 },
+            { text: 'META', size: 45 },
+            { text: 'AMD', size: 40 },
+            { text: 'AVGO', size: 35 },
+            { text: 'PDD', size: 35 },
+            { text: 'ON', size: 30 },
+            { text: 'KLAC', size: 30 },
+            { text: 'ASML', size: 30 },
+            { text: 'INTC', size: 40 },
         ];
 
 
@@ -75,7 +75,7 @@ export class Home {
         const layout = d3.layout.cloud()
             .size([width, height])
             .words(keywords.map(d => ({ text: d.text, size: d.size })))
-            .padding(5)
+            .padding(30)
             .rotate(() => (~~(Math.random() * 2) * 90))
             .fontSize(d => d.size)
             .on('end', words => {
