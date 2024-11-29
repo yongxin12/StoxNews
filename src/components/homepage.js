@@ -52,45 +52,55 @@ export class Home {
             { text: 'NFLX', size: 20 },
             { text: 'META', size: 30 }
         ];
-
+    
+        console.log('Keywords:', keywords);
+    
         const width = document.getElementById('word-cloud-container').offsetWidth;
         const height = 300;
-
+    
         const svg = d3.select('#word-cloud-container')
             .append('svg')
             .attr('width', width)
             .attr('height', height);
-
+    
         const layout = d3.layout.cloud()
             .size([width, height])
-            .words(keywords.map(d => Object.create(d)))
+            .words(keywords.map(d => ({ text: d.text, size: d.size }))) // Ensure correct mapping
             .padding(5)
-            .rotate(() => (~~(Math.random() * 2) * 90)) // Randomly rotate
+            .rotate(() => (~~(Math.random() * 2) * 90))
             .fontSize(d => d.size)
-            .on('end', draw.bind(this));
-
-        console.log('Home instance initialized');
+            .on('end', words => {
+                console.log('Words processed by D3 Cloud:', words); // Debug processed words
+                this.drawWordCloud(svg, words, width, height);
+            });
+    
         layout.start();
-
-        function draw(words) {
-            svg.append('g')
-                .attr('transform', `translate(${width / 2}, ${height / 2})`)
-                .selectAll('text')
-                .data(words)
-                .enter()
-                .append('text')
-                .style('font-size', d => `${d.size}px`)
-                .style('fill', () => `hsl(${Math.random() * 360}, 100%, 50%)`) // Random color
-                .attr('text-anchor', 'middle')
-                .attr('transform', d => `translate(${[d.x, d.y]})rotate(${d.rotate})`)
-                .text(d => d.text)
-                .on('click', d => {
-                    this.stockInput.value = d.text; // Fill input with the selected keyword
-                    console.log(d.text)
-                    this.searchButton.click(); // Trigger search
-                });
-        }
-        
     }
     
+    drawWordCloud(svg, words, width, height) {
+        svg.append('g')
+            .attr('transform', `translate(${width / 2}, ${height / 2})`)
+            .selectAll('text')
+            .data(words)
+            .enter()
+            .append('text')
+            .style('font-size', d => `${d.size}px`)
+            .style('fill', () => `hsl(${Math.random() * 360}, 100%, 50%)`)
+            .attr('text-anchor', 'middle')
+            .attr('transform', d => `translate(${[d.x, d.y]})rotate(${d.rotate})`)
+            .text(d => d.text) // Ensure 'd.text' exists
+            .on('click', this.handleWordClick.bind(this)); // Use bound method
+    }
+    
+    handleWordClick(d) {
+        console.log('Clicked word data:', d);
+        if (d && d.text) {
+            this.stockInput.value = d.text; // Correct `this` context
+            this.searchButton.click(); // Trigger search
+        } else {
+            console.error('Clicked word is missing text:', d);
+        }
+    }
+
+
 }
