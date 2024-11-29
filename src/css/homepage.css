@@ -62,3 +62,15 @@
     background-color: rgb(255, 85, 0);
     cursor: pointer;
 }
+
+#word-cloud-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    
+    transform: translate(50px, 50px);
+    animation: fadeInUpSearch 2s 0.5s forwards;
+    width: 70%;
+    margin: 0 auto;
+}
