@@ -72,11 +72,6 @@ export class Home {
         const width = document.getElementById('word-cloud-container').offsetWidth;
         const height = document.getElementById('word-cloud-container').offsetHeight;
 
-        const svg = d3.select('#word-cloud-container')
-            .append('svg')
-            .attr('width', width)
-            .attr('height', height);
-
         const layout = d3.layout.cloud()
             .size([width, height])
             .words(keywords.map(d => ({ text: d.text, size: d.size })))
@@ -85,31 +80,45 @@ export class Home {
             .fontSize(d => d.size)
             .on('end', words => {
                 console.log('Words processed by D3 Cloud:', words);
-                this.drawWordCloud(svg, words, width, height);
+                this.drawWordCloud("word-cloud-container", words);
             });
 
         layout.start();
     }
 
-    drawWordCloud(svg, words, width, height) {
+    drawWordCloud(containerId, words) {
+        const container = document.getElementById(containerId);
+        const width = container.offsetWidth;
+        const height = container.offsetHeight;
+    
+        // Remove existing SVG (for re-rendering on resize)
+        d3.select(`#${containerId} svg`).remove();
+    
+        // Create a responsive SVG
+        const svg = d3.select(`#${containerId}`)
+            .append('svg')
+            .attr('width', '100%')
+            .attr('height', '100%')
+            .attr('viewBox', `0 0 ${width} ${height}`) // Maintain aspect ratio
+            .attr('preserveAspectRatio', 'xMidYMid meet'); // Center the word cloud
+    
         const colors = ['#ff5500', '#111111'];
+    
         svg.append('g')
-            .attr('transform', `translate(${width / 2}, ${height / 2})`)
+            .attr('transform', `translate(${width / 2}, ${height / 2})`) // Center the word cloud
             .selectAll('text')
             .data(words)
             .enter()
             .append('text')
             .style('font-size', d => `${d.size}px`)
             .style('fill', () => {
-                // Randomly select a base color
                 const baseColor = colors[Math.floor(Math.random() * colors.length)];
-                // Adjust lightness for two shades (30% for dark, 70% for light)
                 const lightness = Math.random() < 0.5 ? 30 : 70;
                 return this.convertHexToHslWithLightness(baseColor, lightness);
             })
             .attr('text-anchor', 'middle')
-            .attr('transform', d => `translate(${[d.x, d.y]})rotate(${d.rotate})`)
-            .text(d => d.text) // Ensure the text content is set
+            .attr('transform', d => `translate(${d.x}, ${d.y})rotate(${d.rotate})`)
+            .text(d => d.text)
             .on('mouseover', function (event, d) {
                 d3.select(this)
                     .transition() // Start a D3 transition
