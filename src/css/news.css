@@ -211,14 +211,4 @@
 }
 
 
-/* Styles for the Toggle Button */
-.toggle-menu {
-    width: 100%;
-    padding: 10px;
-    display: none;
-    background-color: #111;
-    color: white;
-    border: none;
-    cursor: pointer;
-    text-align: center;
-}
+

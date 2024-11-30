@@ -15,23 +15,23 @@
 }
 
 #stoxnews-logo {
-    top: 10px; /* Adjust based on positioning */
-    left: 10px; /* Adjust based on positioning */
+    top: 10px;
+    /* Adjust based on positioning */
+    left: 10px;
+    /* Adjust based on positioning */
     font-size: 24px;
     font-weight: bold;
     color: #ffffff;
     text-decoration: none;
     display: inline-block;
-    transition: transform 0.3s ease-in-out; /* Smooth animation */
+    transition: transform 0.3s ease-in-out;
+    /* Smooth animation */
 }
 
-#stoxnews-logo img {
-    width: 50px; /* Set logo size */
-    height: auto;
-}
 
 #stoxnews-logo:hover {
-    transform: scale(1.02); /* Slightly enlarge on hover */
+    transform: scale(1.02);
+    /* Slightly enlarge on hover */
 }
 
 .sidebar nav ul {
@@ -66,4 +66,88 @@
     color: white;
     text-decoration: none;
     margin-top: 10px;
+}
+
+/* Styles for the Toggle Button */
+.toggle-menu {
+    padding: 10px;
+    display: none;
+    background-color: #111;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-align: right;
+}
+
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        max-width: 100%;
+        max-height: 60px;
+        background-color: #111;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center; /* Centers vertically */
+        flex-direction: row;
+        animation: slideInTop 1s forwards;
+
+    }
+
+    .sidebar nav {
+        display: flex;
+        justify-content: center;
+        align-items: center; /* Centers vertically */
+        flex-direction: column;
+    }
+
+    .sidebar #stoxnews-logo {
+        /* Adjust based on positioning */
+        left: 0;
+        /* Adjust based on positioning */
+        font-size: 24px;
+        font-weight: bold;
+        color: #ffffff;
+        text-decoration: none;
+        display: inline-block;
+        position:relative;
+        transition: transform 0.3s ease-in-out;
+        /* Smooth animation */
+    }
+
+
+
+    .sidebar nav ul {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        height: fit-content;
+        padding: 0;
+    }
+
+    .sidebar nav ul li {
+
+        padding: 10px;
+    }
+
+    .sidebar-footer a {
+        margin-top: 5px;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .sidebar.visible {
+        padding: 0;
+        margin: 0;
+        display: flex;
+
+    }
+
+    .toggle-menu {
+        display: block;
+        
+    }
 }

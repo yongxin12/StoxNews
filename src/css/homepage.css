@@ -74,3 +74,25 @@
     width: 70%;
     margin: 0 auto;
 }
+
+
+@media (max-width: 768px) {
+
+    #title {
+        text-align: center; /* Center text */
+        margin: 0 auto; /* Center the title element */
+        font-size: 3rem;
+        color: #333;
+        opacity: 0;
+        transform: translateY(-20px); 
+        animation: fadeInUp 2s forwards;
+        transition: all 0.5s ease;
+    }
+    .centered-title {
+        opacity: 1;
+        position: static; /* Resets to default flow */
+        top: auto;
+        left: auto;
+        
+    }
+}

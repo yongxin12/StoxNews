@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const home = Home.getInstance(); 
 
-    // news.initializeNews();
 
     setupNavigation();
 
@@ -31,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.querySelector('.sidebar');
     const toggleButton = document.createElement('button');
-    toggleButton.textContent = '☰ Menu';
+    toggleButton.textContent = 'Menu ☰';
     toggleButton.classList.add('toggle-menu');
 
     // Insert the toggle button at the top of the body

@@ -33,3 +33,20 @@ body {
 
 
 
+@media (max-width: 768px) {
+    html, body {
+        width: 100%;
+        max-width: 100%;  /* Prevents any content from exceeding 100% of viewport width */
+        overflow-x: hidden;  /* Prevent horizontal scrolling */
+    }
+
+    .app-container {
+        flex-direction: column;
+    }
+
+    .main-content {
+        padding: 10px;
+    }
+}
+
+
