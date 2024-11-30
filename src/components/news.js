@@ -39,6 +39,7 @@ export class News {
         this.currentButtonId = null;
         this.currentSymbol = null;
         this.currentNewsList = null;
+        this.currentRangeIndex = 3;
 
         this.initializeEventListeners();
     }
@@ -69,17 +70,22 @@ export class News {
         });
 
         this.dateRangeSlider.addEventListener('input', async (event) => {
-            const rangeIndex = parseInt(event.target.value) - 1;
-            const range = this.dateRanges[rangeIndex];
+            this.currentRangeIndex = parseInt(event.target.value) - 1;
+            const range = this.dateRanges[this.currentRangeIndex];
 
             const filteredStockData = this.filterStockDataByRange(this.stockData, range);
-            const filteredNewsData = this.filterNewsDataByRange(this.newsData, range);
+            const filteredNewsData = this.filterNewsDataByRange(range);
 
             console.log(filteredNewsData);
 
             const newsDates = filteredNewsData.map(newsItem => newsItem.date);
             this.stockGraph.generateGraph(filteredStockData, range, newsDates, this.currentSymbol);
-            this.renderNewsList(filteredNewsData);
+            if (this.currentButtonId === 'gaining-summary-btn' || this.currentButtonId === 'losing-summary-btn') {
+                this.renderNewsAnalysisList(filteredNewsData);
+            } else {
+                this.renderNewsList(filteredNewsData);
+            }
+
         });
 
         this.categoryButtonsContainer.addEventListener('click', (event) => {
@@ -98,13 +104,22 @@ export class News {
                 } else if (this.currentButtonId === 'industry-trends-btn') {
                     this.currentNewsList = this.newsData[this.currentButtonId];
                     this.renderNewsList(this.currentNewsList);
-                } else if (this.currentButtonId === 'gaining-summary-btn') {
+                } else if (this.currentButtonId === 'gaining-summary-btn' || this.currentButtonId === 'losing-summary-btn') {
                     this.currentNewsList = this.newsData[this.currentButtonId];
                     this.renderNewsAnalysisList(this.currentNewsList);
                 } else {
                     this.currentNewsList = this.newsData[this.currentButtonId];
                     this.renderNewsList(this.newsData[this.currentButtonId]);
                 }
+
+                // update displayed news tag on the graph
+                const range = this.dateRanges[this.currentRangeIndex];
+                const filteredStockData = this.filterStockDataByRange(this.stockData, range);
+                const filteredNewsData = this.filterNewsDataByRange(range);
+
+                const newsDates = filteredNewsData.map(newsItem => newsItem.date);
+                this.stockGraph.generateGraph(filteredStockData, range, newsDates, this.currentSymbol);
+
             }
         });
 
@@ -120,12 +135,14 @@ export class News {
                     const category = activeCategoryButton ? activeCategoryButton.id : null;
                     if (this.currentButtonId === 'gaining-summary-btn') {
                         const selectedNewsItem = this.currentNewsList[index];
-                        const detailHTML = this.renderNewsAnalysisDetail(selectedNewsItem);
+                        this.renderNewsAnalysisDetail(selectedNewsItem, 'gaining');
+                    } else if (this.currentButtonId === 'losing-summary-btn') {
+                        const selectedNewsItem = this.currentNewsList[index];
+                        this.renderNewsAnalysisDetail(selectedNewsItem, 'losing');
                     } else if (category && this.currentNewsList[index]) {
-                        console.log(1)
                         const selectedNewsItem = this.currentNewsList[index];
                         this.renderNewsDetail(selectedNewsItem);
-                    } 
+                    }
                 }
             } else {
                 if (newsItemElement) {
@@ -135,18 +152,18 @@ export class News {
                     console.log(this.currentNewsList);
                     if (category && this.currentNewsList[index]) {
                         const selectedNewsItem = this.currentNewsList[index];
-    
+
                         if (this.currentNewsDetailElement) {
                             this.currentNewsDetailElement.remove();
                         }
-    
+
                         if (this.currentNewsDetailIndex === index) {
                             this.currentNewsDetailIndex = null;
                             this.currentNewsDetailElement = null;
                         } else {
                             const detailHTML = this.renderNewsDetail(selectedNewsItem);
                             newsItemElement.insertAdjacentHTML('afterend', detailHTML);
-    
+
                             this.currentNewsDetailIndex = index;
                             this.currentNewsDetailElement = newsItemElement.nextElementSibling;
                         }
@@ -167,7 +184,7 @@ export class News {
         });
     }
 
-    filterNewsDataByRange(newsData, range) {
+    filterNewsDataByRange(range) {
         const now = new Date();
         const rangeDays = this.ranges[range] || Infinity;
         const startDate = new Date(now.setDate(now.getDate() - rangeDays));
@@ -268,18 +285,18 @@ export class News {
         }
     }
 
-    renderNewsAnalysisDetail(analysisItem) {
+    renderNewsAnalysisDetail(analysisItem, type) {
         if (!isMobile()) {
             const reasonsHTML = analysisItem.news.map(newsItem => `
                 <li>
-                    <strong>${newsItem.title}</strong>
-                    <p>${newsItem.correlated_reason}</p>
+                    <strong>News: ${newsItem.title}</strong>
+                    <p>Reason: ${newsItem.correlated_reason}</p>
                     <a href="${newsItem.url}" target="_blank" rel="noopener noreferrer">Read full article</a>
                 </li>
             `).join('');
 
             this.newsDetail.innerHTML = `
-            <h2>${analysisItem.type} Correlated Reason for ${analysisItem.date}</h2>
+            <h2> Correlated Reason for ${analysisItem.date} ${type} </h2>
             <ul class="correlated-reasons">${reasonsHTML}</ul>
         `;
         }

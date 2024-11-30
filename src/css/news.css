@@ -178,9 +178,21 @@
     flex: 1;
     height: 25rem;
     background-color: white;
+    overflow-y: auto;
     padding: 20px;
+    border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.correlated-reasons {
+    margin: 0;
+    padding: 0;
+    list-style-type: none; /* Remove default list styling */
+}
+
+.correlated-reasons li {
+    margin-bottom: 15px; /* Add spacing between items */
 }
 
 .news-item, .news-detail {
