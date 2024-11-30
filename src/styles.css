@@ -12,7 +12,8 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f0f0f0;
-    height: 100vh; /* Take up the full height of the viewport */
+    height: 100vh;
+    /* Take up the full height of the viewport */
     display: flex;
     flex-direction: column;
 }
@@ -28,16 +29,19 @@ body {
     margin: 20px;
     margin-bottom: 0;
     width: 100%;
-    overflow: hidden; /* Prevents overflow */
+    overflow: hidden;
+    /* Prevents overflow */
 }
 
 
 
 @media (max-width: 768px) {
-    html, body {
+    body {
         width: 100%;
-        max-width: 100%;  /* Prevents any content from exceeding 100% of viewport width */
-        overflow-x: hidden;  /* Prevent horizontal scrolling */
+        max-width: 100%;
+        /* Prevents any content from exceeding 100% of viewport width */
+        overflow-x: hidden;
+        /* Prevent horizontal scrolling */
     }
 
     .app-container {
@@ -45,8 +49,12 @@ body {
     }
 
     .main-content {
-        padding: 10px;
+        margin: 0;
+        padding: 20px;
+        margin-bottom: 0;
+        width: 100%;
+        overflow: hidden;
+        box-sizing: border-box;
+        /* Prevents overflow */
     }
 }
-
-
