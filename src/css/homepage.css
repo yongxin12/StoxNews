@@ -63,24 +63,23 @@
     cursor: pointer;
 }
 
-#word-cloud-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    
-    transform: translate(0,50px);
-    animation: fadeInUpSearch 2s 0.5s forwards;
-    width: 70%;
-    margin: 0 auto;
-}
+
 
 
 @media (max-width: 768px) {
+    .content-section{
+        width: inherit;
+        height: 100vh;
+        display: flex;             
+        flex-direction: column;    
+        align-items: center;       
+        justify-content: start;   
+        overflow: hidden; 
+    }
 
     #title {
         text-align: center; /* Center text */
-        margin: 0 auto; /* Center the title element */
+        margin: 30px auto; /* Center the title element */
         font-size: 3rem;
         color: #333;
         opacity: 0;
@@ -88,11 +87,56 @@
         animation: fadeInUp 2s forwards;
         transition: all 0.5s ease;
     }
-    .centered-title {
-        opacity: 1;
-        position: static; /* Resets to default flow */
-        top: auto;
-        left: auto;
-        
+
+    .home-stock-input {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transform: translate(50px, 50px);
+        animation: fadeInUpSearch 2s 0.5s forwards;
+        width: 90%;
+        max-width: 300px;
+        margin: 20px auto;
+    }
+
+    .home-stock-input input {
+        flex-grow: 1;
+        padding: 10px;
+        font-size: 1rem;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        width: 100%; /* Input should adapt to parent width */
+        margin-bottom: 10px;
+    }
+    .home-stock-input button {
+        padding: 10px;
+        margin-left: 10px;
+        font-size: 1rem;
+        border: none;
+        background-color: #333;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    #home-search-btn:hover {
+        background-color: rgb(255, 85, 0);
+        cursor: pointer;
+    }
+
+    #word-cloud-container{
+        display: flex;
+        flex-direction: column; 
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        flex: 1; /* Fill the remaining space */
+        transform: translate(0,50px);
+        animation: fadeInUpSearch 2s 0.5s forwards;
+        width: 70%;
+        margin: 0 auto;
     }
 }
