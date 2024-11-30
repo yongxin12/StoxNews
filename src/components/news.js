@@ -161,6 +161,7 @@ export class News {
                     const index = newsItemElement.dataset.index;
                     const activeCategoryButton = document.querySelector('.category-buttons button.active');
                     const category = activeCategoryButton ? activeCategoryButton.id : null;
+                    let detailHTML = null;
                     console.log(this.currentNewsList);
                     if (category && this.currentNewsList[index]) {
                         const selectedNewsItem = this.currentNewsList[index];
@@ -173,9 +174,14 @@ export class News {
                             this.currentNewsDetailIndex = null;
                             this.currentNewsDetailElement = null;
                         } else {
-                            const detailHTML = this.renderNewsDetail(selectedNewsItem);
+                            if (this.currentButtonId === 'gaining-summary-btn') {
+                                detailHTML = this.renderNewsAnalysisDetail(selectedNewsItem, 'gaining');
+                            } else if (this.currentButtonId === 'losing-summary-btn') {
+                                detailHTML = this.renderNewsAnalysisDetail(selectedNewsItem, 'losing');
+                            } else {
+                                detailHTML = this.renderNewsDetail(selectedNewsItem);
+                            }
                             newsItemElement.insertAdjacentHTML('afterend', detailHTML);
-
                             this.currentNewsDetailIndex = index;
                             this.currentNewsDetailElement = newsItemElement.nextElementSibling;
                         }
@@ -266,9 +272,8 @@ export class News {
             ${logoURL ? `<img src="${logoURL}" alt="${this.currentSymbol} logo" class="logo-image">` : ''}
         `;
         } else {
-            console.log("DETAIL")
             return `
-        <div class="news-detail">
+        <div id="news-detail-responsive">
             <h2>${newsItem.title}</h2>
             <p>Published by: ${newsItem.publisher}</p>
             <p>Published on: ${newsItem.date}</p>
@@ -316,6 +321,20 @@ export class News {
             <h2> Correlated Reason for ${analysisItem.date} ${type} </h2>
             <ul class="correlated-reasons">${reasonsHTML}</ul>
         `;
+        } else {
+            const reasonsHTML = analysisItem.news.map(newsItem => `
+                <li>
+                    <strong>News: ${newsItem.title}</strong>
+                    <p>Reason: ${newsItem.correlated_reason}</p>
+                    <a href="${newsItem.url}" target="_blank" rel="noopener noreferrer">Read full article</a>
+                </li>
+            `).join('');
+            return `
+        <div id="news-detail-responsive">
+            <h2> Correlated Reason for ${analysisItem.date} ${type} </h2>
+            <ul class="correlated-reasons">${reasonsHTML}</ul>
+        </div>
+    `;
         }
     }
 
