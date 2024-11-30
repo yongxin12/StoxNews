@@ -138,38 +138,26 @@ export class News {
         this.newsList.addEventListener('click', (event) => {
             const newsItemElement = event.target.closest('.news-item');
             console.log("newsList item clicked");
-
-            if (!isMobile()) {
-                if (newsItemElement) {
-
-                    const index = newsItemElement.dataset.index;
-                    const activeCategoryButton = document.querySelector('.category-buttons button.active');
-                    const category = activeCategoryButton ? activeCategoryButton.id : null;
+            if (newsItemElement) {
+                const index = newsItemElement.dataset.index;
+                const activeCategoryButton = document.querySelector('.category-buttons button.active');
+                const category = activeCategoryButton ? activeCategoryButton.id : null;
+                const selectedNewsItem = this.currentNewsList[index];
+                if (!isMobile()) {
                     if (this.currentButtonId === 'gaining-summary-btn') {
-                        const selectedNewsItem = this.currentNewsList[index];
                         this.renderNewsAnalysisDetail(selectedNewsItem, 'gaining');
                     } else if (this.currentButtonId === 'losing-summary-btn') {
-                        const selectedNewsItem = this.currentNewsList[index];
                         this.renderNewsAnalysisDetail(selectedNewsItem, 'losing');
                     } else if (category && this.currentNewsList[index]) {
-                        const selectedNewsItem = this.currentNewsList[index];
                         this.renderNewsDetail(selectedNewsItem);
                     }
-                }
-            } else {
-                if (newsItemElement) {
-                    const index = newsItemElement.dataset.index;
-                    const activeCategoryButton = document.querySelector('.category-buttons button.active');
-                    const category = activeCategoryButton ? activeCategoryButton.id : null;
+                } else {
                     let detailHTML = null;
                     console.log(this.currentNewsList);
                     if (category && this.currentNewsList[index]) {
-                        const selectedNewsItem = this.currentNewsList[index];
-
                         if (this.currentNewsDetailElement) {
                             this.currentNewsDetailElement.remove();
                         }
-
                         if (this.currentNewsDetailIndex === index) {
                             this.currentNewsDetailIndex = null;
                             this.currentNewsDetailElement = null;
@@ -186,8 +174,12 @@ export class News {
                             this.currentNewsDetailElement = newsItemElement.nextElementSibling;
                         }
                     }
+
                 }
+                this.updateGraphForNews(this.currentSymbol, selectedNewsItem.date)
+                console.log(selectedNewsItem.date);
             }
+
         });
 
         // Add click event to toggle the graph visibility
@@ -219,8 +211,8 @@ export class News {
 
         return this.currentNewsList.filter(newsItem => {
             const newsDate = new Date(newsItem.date);
-            console.log(newsItem.date);
-            console.log(newsDate);
+            // console.log(newsItem.date);
+            // console.log(newsDate);
             return newsDate >= startDate;
         });
     }
@@ -335,6 +327,32 @@ export class News {
             <ul class="correlated-reasons">${reasonsHTML}</ul>
         </div>
     `;
+        }
+    }
+
+    async updateGraphForNews(symbol, newsDate) {
+        try {
+            // Fetch stock data for the affected symbol
+            const stockData = await this.stockDataFetcher.fetchStockData(symbol);
+            if (!stockData) throw new Error(`No data found for symbol: ${symbol}`);
+
+            // Update the graph and highlight the news date
+            const now = new Date(newsDate)
+            const startDate = new Date(now); // Clone the original date
+            startDate.setDate(now.getDate() - 7);
+
+            const endDate = new Date(now); // Clone the original date
+            endDate.setDate(now.getDate() + 7);
+            console.log("startDate:", startDate);
+            console.log("endDate:", endDate);
+            const filteredStockData = stockData.filter(item => {
+                const itemDate = new Date(item.date);
+                return itemDate >= startDate && itemDate <= endDate;
+            });
+
+            this.stockGraph.generateGraph(filteredStockData, '1M', [newsDate], symbol);
+        } catch (error) {
+            console.error(`Error updating graph for symbol ${symbol}:`, error);
         }
     }
 
