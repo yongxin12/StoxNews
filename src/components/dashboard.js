@@ -105,9 +105,6 @@ export class Dashboard {
     }
 
     async initializeDashboard() {
-        // Fetch and display stock data (if relevant)
-        const stockData = await this.stockDataFetcher.fetchStockData(this.stockSymbol);
-        this.stockGraph.generateGraph(stockData, '1M');
 
         // Fetch initial news (e.g., gainers as default)
         this.fetchAndDisplayNews('gaining');

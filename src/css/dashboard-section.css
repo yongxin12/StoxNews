@@ -1,9 +1,5 @@
 /* Ensure the dashboard section occupies full screen height */
 #dashboard-section {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    font-family: Arial, sans-serif;
     overflow: hidden; /* Prevents the dashboard itself from scrolling */
 }
 
