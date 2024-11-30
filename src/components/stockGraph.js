@@ -47,7 +47,7 @@ export class StockGraph {
             fill: false,
             animation: {
                 duration: 1000,  // Animation duration in milliseconds
-                easing: 'easeInOutBounce'  // Easing type for animation
+                easing: 'easeOutCirc'  // Easing type for animation
             },
             layout: {
                 padding: {

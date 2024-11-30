@@ -212,8 +212,8 @@
     position: absolute;
     bottom: 10px;
     right: 10px;
-    width: 4rem; /* Set fixed width */
-    height: 4rem; /* Set fixed height */
+    width: 2rem; /* Set fixed width */
+    height: 2rem; /* Set fixed height */
     object-fit: contain; /* Ensures the image scales without distortion */
     opacity: 0.7;
     border-radius: 5px; /* Optional: Adds a slight rounding for a consistent look */
@@ -285,11 +285,13 @@
     
     .category-buttons {
         flex-wrap: wrap;
+        gap: 10px;
     }
 
     .category-buttons button {
         flex: 1 1 40%;
         margin: 0px;
+        font-size: 0.7rem;  
         
     }
 
