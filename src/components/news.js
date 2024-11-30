@@ -41,6 +41,18 @@ export class News {
         this.currentNewsList = null;
         this.currentRangeIndex = 3;
 
+
+        // Select the news-stock-graph element
+        this.newsStockGraph = document.getElementById('news-stock-graph');
+        this.newsStockGraphParent = this.newsStockGraph.parentNode;
+        // Create the magnifier toggle button
+        this.magnifierButton = document.createElement('button');
+        this.magnifierButton.textContent = '📈';
+        this.magnifierButton.classList.add('toggle-magnifier');
+
+        // Insert the toggle button at the top of the body
+        this.newsStockGraphParent.insertBefore(this.magnifierButton, this.newsStockGraph);
+
         this.initializeEventListeners();
     }
 
@@ -170,6 +182,11 @@ export class News {
                     }
                 }
             }
+        });
+
+        // Add click event to toggle the graph visibility
+        this.magnifierButton.addEventListener('click', () => {
+            this.newsStockGraph.classList.toggle('visible');
         });
     }
 

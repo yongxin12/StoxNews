@@ -28,8 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Adding functionality for mobile sidebar toggle
 document.addEventListener('DOMContentLoaded', () => {
+    // for responsive menu
     const sidebar = document.querySelector('.sidebar');
     const toggleButton = document.createElement('button');
+    
     toggleButton.textContent = 'Menu ☰';
     toggleButton.classList.add('toggle-menu');
 

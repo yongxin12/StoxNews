@@ -64,14 +64,16 @@
                 </div>
 
                 <h3 id="stock-name">TSLA</h3>
-
-                <div class="date-range-selector">
-                    <label for="dateRangeSlider">Select Range</label>
-                    <input type="range" min="1" max="4" step="1" value="4" id="dateRangeSlider">
+                <div id="news-stock-graph">
+                    <div class="date-range-selector">
+                        <label for="dateRangeSlider">Select Range</label>
+                        <input type="range" min="1" max="4" step="1" value="4" id="dateRangeSlider">
+                    </div>
+                    <div class="stock-graph">
+                        <canvas id="stockGraphElement" width="400" height="200"></canvas>
+                    </div>
                 </div>
-                <div class="stock-graph">
-                    <canvas id="stockGraphElement" width="400" height="200"></canvas>
-                </div>
+                
 
 
                 <div class="category-buttons">
