@@ -1,0 +1,53 @@
+name: Deploy Frontend on Tag dev
+
+# 當 Tag 是 dev 時自動觸發工作流
+on:
+  push:
+    tags:
+      - dev
+
+jobs:
+  build-push-deploy:
+    runs-on: ubuntu-latest
+
+    env:  # 定義環境變數
+      AWS_REGION: us-east-1
+      AWS_ACCOUNT_ID: 311141556352
+      ECR_REPOSITORY: stock/fornted
+      IMAGE_TAG: dev  # 使用 tag 作為映像標籤
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    steps:
+    # 檢查代碼
+    - uses: actions/checkout@v2
+
+    # 配置 AWS CLI
+    - name: Set up AWS CLI
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    # 登錄到 Amazon ECR
+    - name: Log in to Amazon ECR
+      run: |
+        aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
+
+    # 構建 Docker 映像
+    - name: Build Docker image
+      run: docker build -t ${{ env.ECR_REPOSITORY }} .
+
+    # 標記 Docker 映像
+    - name: Tag Docker image for ECR
+      run: docker tag ${{ env.ECR_REPOSITORY }}:latest ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+
+    # 推送 Docker 映像到 ECR
+    - name: Push Docker image to ECR
+      run: docker push ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+
+    # 更新 ECS 服務
+    - name: Deploy to Amazon ECS
+      run: |
+        aws ecs update-service --cluster stock-cluster --service stock-service --force-new-deployment --region ap-southeast-1
