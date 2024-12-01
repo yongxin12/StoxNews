@@ -43,7 +43,50 @@ sequenceDiagram
     UI->>User: Shows graph and news list
     ErrorMsg->>UI: Display error message if data fetch fails
 ```
+## Project Structure
+```markdown
+.
+├── Dockerfile
+├── index.html
+├── LICENSE
+├── mockApi.js
+├── nginx.conf
+├── README.md
+└── src
+    ├── assets
+    │   ├── GOOG.png
+    │   ├── INTC.png
+    │   ├── META.png
+    │   ├── NVDA.png
+    │   ├── PACCAR.png
+    │   └── TSLA.png
+    ├── components
+    │   ├── animation.js
+    │   ├── breakingNews.js
+    │   ├── dashboard.js
+    │   ├── homepage.js
+    │   ├── navigation.js
+    │   ├── news.js
+    │   ├── stockDataFetcher.js
+    │   ├── stockGraph.js
+    │   └── utils.js
+    ├── css
+    │   ├── animations.css
+    │   ├── dashboard-section.css
+    │   ├── homepage.css
+    │   ├── navbar.css
+    │   ├── news.css
+    │   ├── responsive.css
+    │   └── visibility.css
+    ├── index.js
+    └── styles.css
+```
 ## Tasks done
+2024/11/30 fixed incorrect display issue
+2024/11/29 responsive design and finalize UI
+2024/11/28 applied top news analysis api
+2024/11/28 wordcloud added on homepage
+2024/11/15 dashboard section added
 2024/10/25 improved GUI
 2024/10/25 News Integrated
 2024/10/20 improved GUI
