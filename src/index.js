@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const stockSymbol = 'TSLA';  // Default or dynamic stock symbol
-    const apiBaseUrl = 'http://localhost:5001';  // API base URL
+    const apiBaseUrl = 'http://18.206.45.106:5001';  // API base URL
     const dashboard = new Dashboard(
         apiBaseUrl,
     );
