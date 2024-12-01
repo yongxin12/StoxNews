@@ -85,14 +85,15 @@ export class Dashboard {
             const stockData = await this.stockDataFetcher.fetchStockData(symbol);
             if (!stockData) throw new Error(`No data found for symbol: ${symbol}`);
             
-            // Update the graph and highlight the news date
-            const now = new Date(newsDate)
-            const startDate = new Date();
-            const endDate = new Date();
-            startDate.setDate(now.getDate() - 7);
-            endDate.setDate(now.getDate() + 7);
-            // console.log(newsDate);
-            // console.log(stockData);
+             // Update the graph and highlight the news date
+             const now = new Date(newsDate)
+             const startDate = new Date(now); // Clone the original date
+             startDate.setDate(now.getDate() - 7);
+ 
+             const endDate = new Date(now); // Clone the original date
+             endDate.setDate(now.getDate() + 7);
+             console.log("startDate:", startDate);
+             console.log("endDate:", endDate);
             const filteredStockData = stockData.filter(item => {
                 const itemDate = new Date(item.date);
                 return itemDate >= startDate && itemDate <= endDate;
@@ -105,7 +106,6 @@ export class Dashboard {
     }
 
     async initializeDashboard() {
-
         // Fetch initial news (e.g., gainers as default)
         this.fetchAndDisplayNews('gaining');
     }
