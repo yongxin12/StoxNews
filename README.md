@@ -1,4 +1,35 @@
-# StoxNews
+# StoxNews(front-end part)
+## Project Overview
+### Objective:
+The goal of this project is to create a comprehensive company analysis platform that provides multi-faceted insights into a given company's performance, competitive positioning, industry trends, and relevant government policies. By inputting a company's name, users can access a holistic view of the company's current status and its business environment.
+
+### Target Audience:
+
+- Investors and financial analysts
+- Business strategists and consultants
+- Corporate executives and decision-makers
+- Market researchers and industry analysts
+
+### Key Features:
+
+1. Company Status Analysis:
+    - Recent financial reports and key performance indicators
+    - Current business model overview
+    - Notable recent developments or announcements
+2. Competitive Positioning:
+    - Comparison with key competitors in various aspects (e.g., market share, financial performance, product offerings)
+    - Strengths and weaknesses relative to competitors
+    - Unique selling propositions and competitive advantages
+3. Industry Updates:
+    - Recent trends and developments in the company's industry
+    - Market size and growth projections
+    - Emerging technologies or disruptive forces affecting the industry
+4. Regulatory and Government Impact:
+    - Recent or upcoming government policies affecting the company or industry
+    - Regulatory changes and their potential impact
+    - Government incentives or restrictions relevant to the company's operations
+
+This platform aims to provide a comprehensive, data-driven snapshot of a company's current position within its business ecosystem, enabling users to make informed decisions and gain valuable insights into the company's potential future performance.
 
 ## Docker
 How to run frontend
